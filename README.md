@@ -8,6 +8,16 @@ Here are the main principles bootstraped :
 * UI base kit configured
 * Remote service configuration (http)
 
+## Libraries
+First of all, thanks to all of those libraries that this project is using :
+* **react** (base library)
+* **react-router-dom** (routing)
+* **core-js** and **react-app-polyfill** (polyfills)
+* **prop-types** (type checking)
+* **redux** and **react-redux** (redux setup)
+* **axios** (http requests)
+* **@material-ui/core** and **@material-ui/styles** and **@material-ui/theme** (ui base kit)
+
 ## Base files structure
 * [D]root
     * [D]public
@@ -36,4 +46,17 @@ Here are the main principles bootstraped :
         * [D]theme
             * theme.js (base theme file used to set the base colors)
     * package.json
+
+## Components structure
+The component structure is really simple : 
+
+* [D]components
+    * [D]ui-kit
+
+The goal is to create all base ui-kit components inside the ui-kit folder.
+For example, if you create a Button component, this button should be in **/components/ui-kit/Button**.
+Like this you can have reusable ui components easily configured.
+Be aware, those ui components should only be there for ui, they should'nt contain the logic of the app inside.
+
+## Redux structure and configuration
 
