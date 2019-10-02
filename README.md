@@ -47,6 +47,11 @@ First of all, thanks to all of those libraries that this project is using :
             * theme.js (base theme file used to set the base colors)
     * package.json
 
+## Installation
+    git clone https://github.com/Maexwel/web-structure.git <-destination-name->
+    git remote set-url origin <-you-git-remote-url->
+    npm i
+
 ## Components structure
 The component structure is really simple : 
 
@@ -59,4 +64,5 @@ Like this you can have reusable ui components easily configured.
 Be aware, those ui components should only be there for ui, they should'nt contain the logic of the app inside.
 
 ## Redux structure and configuration
+The redux structure and configuration is this one :
 
