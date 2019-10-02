@@ -66,3 +66,19 @@ Be aware, those ui components should only be there for ui, they should'nt contai
 ## Redux structure and configuration
 The redux structure and configuration is this one :
 
+* [D]store
+    * [D]actions
+         * constants.js
+         * ....Actions.js
+    * [D]reducers
+        * reducer.js
+        * ...Reducer.js
+    * index.js
+
+If you want to create a new Reducer, here are the steps :
+1. Create the constants for you reducer in **/store/actions/constants.js**
+2. Create an action file in **/store/actions** containing the actions
+3. Create the reducer in **/store/reducers** using a switch for you created actions's constants
+4. Include your reducer inside the **/store/reducers/reducer.js** file
+5. Here you are, you can now use you redux store everywhere in your components by connecting theme !
+
