@@ -156,6 +156,7 @@ export default class ExampleService extends Service {
 ```
 
 Service class : 
+
 Properties | Type | Description
 --- | --- | ---
 `uri` | *string* | Should be given in the constructor. The uri is the endpoint for all the API calls.
