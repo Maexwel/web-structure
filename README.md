@@ -9,7 +9,16 @@ Here are the main principles bootstraped :
 * Remote service configuration (http)
 
 ## Table of content
-[Libraries] (## Libraries)
+
+- [Web structure project](#web-structure-project)
+  - [Goal](#goal)
+  - [Table of content](#table-of-content)
+  - [Libraries](#libraries)
+  - [Base files structure](#base-files-structure)
+  - [Installation](#installation)
+  - [Components structure](#components-structure)
+  - [Redux structure and configuration](#redux-structure-and-configuration)
+  - [Routing structure](#routing-structure)
 
 ## Libraries
 First of all, thanks to all of those libraries that this project is using :
@@ -23,31 +32,31 @@ First of all, thanks to all of those libraries that this project is using :
 
 ## Base files structure
 ```
-[D]root
-    [D]public
+* root
+    * *public
         - index.html (entry point)
         - web.config (configuration file for IIS hosting)
         - robot.txt
         - ...png (favicon.ico, ... project base icons)
-    [D]src
-        [D]assets (folder for static assets)
-        [D]components (folder for React components)
-            [D]ui-kit (base directory for the ui-kit of the application)
-        [D]router (folder for routing logic)
+    * src
+        * assets (folder for static assets)
+        * components (folder for React components)
+            * ui-kit (base directory for the ui-kit of the application)
+        * router (folder for routing logic)
             - routes.js (constant file with all the routes)
             - index.js (base router using all routes)
-        [D]service (folder for remote service)
+        * service (folder for remote service)
             - constants.js (constant file with all the remote routes)
             - ...Service.js (file containing promises to CRUD data from remote)
-        [D]store (folder containing redux's store)
-            [D]actions
+        * tore (folder containing redux's store)
+            * actions
                 - constants.js (constant file for all actions)
                 - ...Actions.js (Redux's action file)
-            [D]reducers
+            * reducers
                 - reducer.js (main reducer containing all the reducers)
                 - ...Reducer.js (Redux's reducer file)
             - index.js (redux entry point)
-        [D]theme
+        * theme
             - theme.js (base theme file used to set the base colors)
     - package.json
 ```
@@ -60,8 +69,8 @@ First of all, thanks to all of those libraries that this project is using :
 The component structure is really simple : 
 
 ```
-[D]components
-    [D]ui-kit
+* components
+    * ui-kit
 ```
 
 The goal is to create all base ui-kit components inside the ui-kit folder.
@@ -72,11 +81,11 @@ Be aware, those ui components should only be there for ui, they should'nt contai
 ## Redux structure and configuration
 The redux structure and configuration is this one :
 ```
-[D]store
-    [D]actions
+* store
+    * actions
         - constants.js
         - ...Actions.js
-    [D]reducers
+    * reducers
         - reducer.js
         - ...Reducer.js
     - index.js
@@ -89,3 +98,4 @@ If you want to create a new Reducer, here are the steps :
 4. Include your reducer inside the **/store/reducers/reducer.js** file
 5. Here you are, you can now use you redux store everywhere in your components by connecting theme !
 
+## Routing structure
