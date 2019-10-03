@@ -33,7 +33,7 @@ First of all, thanks to all of those libraries that this project is using :
 ## Base files structure
 ```
 * root
-    * *public
+    * public
         - index.html (entry point)
         - web.config (configuration file for IIS hosting)
         - robot.txt
