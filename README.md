@@ -124,7 +124,6 @@ The remote service structure is the following :
 
 The goal is to provide a base Service class ([Javascript ES6 classes](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Classes)) (**/service/service.js**) that should be extendend by all new Services.
 This is an implementation of the Service Design Pattern.
-
 ```
 export default class ExampleService extends Service {
     constructor(){
@@ -155,3 +154,9 @@ export default class ExampleService extends Service {
     }
 }
 ```
+
+Service class : 
+Properties | Type | Description
+--- | --- | ---
+`uri` | *string* | Should be given in the constructor. The uri is the endpoint for all the API calls.
+`token` | *Function* | Is used to access the authToken for the remote calls.
