@@ -2,6 +2,7 @@
 ## Goal
 The goal of this project is to provide à High-level and customizable structure of React app.
 Here are the main principles bootstraped :
+* Base configuration (deployment, dev/acceptance/prod, hosting)
 * Component structure
 * Redux structure and configuration
 * Routing structure
@@ -16,9 +17,12 @@ Here are the main principles bootstraped :
   - [Libraries](#libraries)
   - [Base files structure](#base-files-structure)
   - [Installation](#installation)
+  - [Base configuration](#base-configuration)
   - [Components structure](#components-structure)
   - [Redux structure and configuration](#redux-structure-and-configuration)
   - [Routing structure](#routing-structure)
+  - [UI base kit configured](#ui-base-kit-configured)
+  - [Remote service configuration](#remote-service-configuration)
 
 ## Libraries
 First of all, thanks to all of those libraries that this project is using :
@@ -46,7 +50,7 @@ First of all, thanks to all of those libraries that this project is using :
             - routes.js (constant file with all the routes)
             - index.js (base router using all routes)
         * service (folder for remote service)
-            - constants.js (constant file with all the remote routes)
+            - service.js (ES6 class that contains the base service declaration)
             - ...Service.js (file containing promises to CRUD data from remote)
         * tore (folder containing redux's store)
             * actions
@@ -61,9 +65,14 @@ First of all, thanks to all of those libraries that this project is using :
     - package.json
 ```
 ## Installation
+```
     git clone https://github.com/Maexwel/web-structure.git <-destination-name->
     git remote set-url origin <-you-git-remote-url->
     npm i
+```
+
+## Base configuration
+
 
 ## Components structure
 The component structure is really simple : 
@@ -99,3 +108,50 @@ If you want to create a new Reducer, here are the steps :
 5. Here you are, you can now use you redux store everywhere in your components by connecting theme !
 
 ## Routing structure
+
+## UI base kit configured
+
+## Remote service configuration
+Closely all web application are making HTTP calls to web APIs (such as REST calls, SOAP calls, GraphQL calls).
+It is important to build an efficient an reusable way to make those call.
+
+The remote service structure is the following :
+```
+* service (folder for remote service)
+    - service.js
+    - ...Service.js
+```
+
+The goal is to provide a base Service class ([Javascript ES6 classes](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Classes)) (**/service/service.js**) that should be extendend by all new Services.
+This is an implementation of the Service Design Pattern.
+
+```
+export default class ExampleService extends Service {
+    constructor(){
+        super('https://someurl.com/example'); // Define the uri
+    }
+
+    fetch(){
+        return new Promise(async (resolve, reject) => {
+            try{
+                const {data} = await axios.get(this.uri, {headers: { Authorization : this.getToken() }});
+                resolve(data);
+            }catch(err){
+                reject(err);
+            }
+        });
+    }
+
+    create(){
+        // AXIOS PROMISE
+    }
+
+    udpdate(){
+        // AXIOS PROMISE
+    }
+    
+    delete(){
+        // AXIOS PROMISE
+    }
+}
+```
