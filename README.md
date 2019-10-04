@@ -38,47 +38,60 @@ First of all, thanks to all of those libraries that this project is using :
 ```
 * root
     * public
-        - index.html (entry point)
-        - web.config (configuration file for IIS hosting)
+        - index.html
+        - web.config
         - robot.txt
-        - ...png (favicon.ico, ... project base icons)
+        - ...png, .ico, .svg
     * src
-        * assets (folder for static assets)
-        * components (folder for React components)
-            * ui-kit (base directory for the ui-kit of the application)
-        * router (folder for routing logic)
-            - routes.js (constant file with all the routes)
-            - index.js (base router using all routes)
-        * service (folder for remote service)
-            - service.js (ES6 class that contains the base service declaration)
-            - ...Service.js (file containing promises to CRUD data from remote)
-        * tore (folder containing redux's store)
+        * assets
+        * components
+            * pages
+                * template
+                    - Page.js
+            * ui-kit
+        * router
+            - routes.js
+            - index.js
+        * service
+            - RESTservice.js
+            - GraphQLService.js
+            - ...Service.js
+        * store 
             * actions
-                - constants.js (constant file for all actions)
-                - ...Actions.js (Redux's action file)
+                - constants.js
+                - ...Actions.js
             * reducers
-                - reducer.js (main reducer containing all the reducers)
-                - ...Reducer.js (Redux's reducer file)
-            - index.js (redux entry point)
+                - reducer.js
+                - ...Reducer.js
+            - index.js
         * theme
-            - theme.js (base theme file used to set the base colors)
+            - theme.js
     - package.json
 ```
+
 ## Installation
 ```
     git clone https://github.com/Maexwel/web-structure.git <-destination-name->
+    cd <-destination-name->
     git remote set-url origin <-you-git-remote-url->
     npm i
+    npm start
 ```
 
 ## Base configuration
-
+The base configuration of the app include :
+ - env files injection (dev, production)
+ - web.config configuration (https redirection and router redirection)
+ - **index.js** configuration (entry point of the app)
 
 ## Components structure
 The component structure is really simple : 
 
 ```
 * components
+    * pages
+        * template
+            Page.js
     * ui-kit
 ```
 
@@ -86,6 +99,8 @@ The goal is to create all base ui-kit components inside the ui-kit folder.
 For example, if you create a Button component, this button should be in **/components/ui-kit/Button**.
 Like this you can have reusable ui components easily configured.
 Be aware, those ui components should only be there for ui, they should'nt contain the logic of the app inside.
+
+In the other hand, the **/components/pages** folder is used to provide a way to store all the pages of the application. The **/components/pages/template** folder must contain the base definition of a *Page* (containing the base of routing logic and Redux's store connexion).
 
 ## Redux structure and configuration
 The redux structure and configuration is this one :
@@ -108,24 +123,54 @@ If you want to create a new Reducer, here are the steps :
 5. Here you are, you can now use you redux store everywhere in your components by connecting theme !
 
 ## Routing structure
+The routing structure provide a way to use different pages (default and with a path) but also a way to bind it with a PageTemplate and the Redux's store.
+```
+* router
+  - routes.js
+  - index.js
+```
+
+The **route.js** file is used to store all the route's constants.
+Here is a what should contain the route.js file :
+
+```
+{
+    "APP_ROUTE": {
+        path: '/',
+        name: 'APP'
+    }
+}
+```
 
 ## UI base kit configured
+The ui-kit is based on **material-ui** library that is awesome.
+First, it include the *Design system* pardagim in wich we use a *theme* to store the base style of the app.
+
+```
+* theme
+    - theme.js
+```
+
+The theme is injected using a *ThemeProvider* component.
+
+Then, for the ui-kit, you just have to define your ui-components (button, input, ...) in the **/components/ui-kit** folder.
 
 ## Remote service configuration
-Closely all web application are making HTTP calls to web APIs (such as REST calls, SOAP calls, GraphQL calls).
+Closely all web applications are making HTTP calls to web APIs (such as REST calls, SOAP calls, GraphQL calls).
 It is important to build an efficient an reusable way to make those call.
 
 The remote service structure is the following :
 ```
 * service (folder for remote service)
-    - service.js
+    - RESTService.js
+    - GraphQLService.js
     - ...Service.js
 ```
 
-The goal is to provide a base Service class ([Javascript ES6 classes](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Classes)) (**/service/service.js**) that should be extendend by all new Services.
+The goal is to provide a base Service class ([Javascript ES6 classes](https://developer.mozilla.org/fr/docs/Web/JavaScript/Reference/Classes)) (**/service/RESTservice.js** and **/service/GraphQLService**) that should be extendend by all new Services.
 This is an implementation of the Service Design Pattern.
 ```
-export default class ExampleService extends Service {
+export default class ExampleService extends RESTService {
     constructor(){
         super('https://someurl.com/example'); // Define the uri
     }
@@ -133,7 +178,7 @@ export default class ExampleService extends Service {
     fetch(){
         return new Promise(async (resolve, reject) => {
             try{
-                const {data} = await axios.get(this.uri, {headers: { Authorization : this.getToken() }});
+                const {data} = await axios.get(super.uri, {headers: { Authorization : super.getAuthToken() }});
                 resolve(data);
             }catch(err){
                 reject(err);
@@ -155,9 +200,16 @@ export default class ExampleService extends Service {
 }
 ```
 
-Service class : 
+RESTService class : 
 
 Properties | Type | Description
 --- | --- | ---
 `uri` | *string* | Should be given in the constructor. The uri is the endpoint for all the API calls.
-`token` | *Function* | Is used to access the authToken for the remote calls.
+`getAuthToken` | *Function* | Is used to access the authToken for the remote calls.
+
+GraphQLService class :
+
+Properties | Type | Description
+--- | --- | ---
+`client` | *object* | Should be given in the constructor. The client is the GraphQL client provided by a library like **Apollo**. *You have to install your client provider if you use the GraphQLService*
+`getAuthToken` | *Function* | Is used to access the authToken for the remote calls.
