@@ -9,8 +9,9 @@ import { Provider } from 'react-redux';
 import { theme } from './theme/theme';
 import storeFactory from './store/index';
 import Router from './router/index.js';
+require('dotenv').config();
 
-const store = storeFactory(); // stores's initialization
+const store = storeFactory();
 
 ReactDOM.render(
     <Provider store={store}>

@@ -80,7 +80,7 @@ First of all, thanks to all of those libraries that this project is using :
 
 ## Base configuration
 The base configuration of the app include :
- - env files injection (dev, production)
+ - env files injection (dev, production). You can configure your env variables in the .env files (.env.dev for dev, .env.prod for production)
  - web.config configuration (https redirection and router redirection)
  - **index.js** configuration (entry point of the app)
 
