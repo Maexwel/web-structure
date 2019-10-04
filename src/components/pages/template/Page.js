@@ -21,7 +21,6 @@ const Page = (props) => {
 }
 
 // // // 
-
 // Redux connexion
 const mapStateToProps = state => ({
     currentPage: state.view.currentPage // Current location in the app
