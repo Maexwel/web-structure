@@ -91,7 +91,8 @@ The component structure is really simple :
 * components
     * pages
         * template
-            Page.js
+            - Page.js
+        - index.js
     * ui-kit
 ```
 

@@ -5,12 +5,12 @@ import { withRouter } from 'react-router-dom';
 
 // Base Page template of the application
 const Page = (props) => {
-    const { component: Component, path, viewToState, history, route } = props; // Component to inject
+    const { component: Component, path, name, viewToState, history } = props; // Component to inject
 
     useEffect(() => {
-        viewToState({ currentPage: route }); // set the current page (route = { path: '/', name: '/' })
+        viewToState({ currentPage: { path, name } }); // set the current page (route = { path: '/', name: '/' })
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [route])
+    }, [path, name])
 
     return (
         <div>

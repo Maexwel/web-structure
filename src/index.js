@@ -3,7 +3,20 @@ import 'react-app-polyfill/stable';
 import 'react-app-polyfill/ie11';
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { ThemeProvider } from '@material-ui/styles';
 import * as serviceWorker from './serviceWorker';
+import { Provider } from 'react-redux';
+import { theme } from './theme/theme';
+import storeFactory from './store/index';
+import Router from './router/index.js';
 
-ReactDOM.render(<div />, document.getElementById('root'));
+const store = storeFactory(); // stores's initialization
+
+ReactDOM.render(
+    <Provider store={store}>
+        <ThemeProvider theme={theme}>
+            <Router />
+        </ThemeProvider>
+    </Provider>
+    , document.getElementById('root'));
 serviceWorker.unregister();

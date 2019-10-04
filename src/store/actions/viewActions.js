@@ -1,4 +1,4 @@
-import C from './constants';
+import { constants as C } from './constants';
 
 export const updateViewAction = (val) => (
     {

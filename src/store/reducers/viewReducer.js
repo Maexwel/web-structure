@@ -1,4 +1,4 @@
-import C from '../actions/constants';
+import { constants as C } from '../actions/constants';
 
 export const view = (state = {}, action) => {
     switch (action.type) {
