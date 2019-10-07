@@ -1,10 +1,8 @@
-export default class RESTService {
-    constructor(uri) {
-        this.uri = uri; // URI used to make service calls
-    }
+import Service from "./Service";
 
-    // Retrieve the authToken from the localStorage
-    getAuthToken() {
-        return localStorage.getItem("SERVICE_AUTH_TOKEN");
+export default class RESTService extends Service {
+    constructor(uri) {
+        super();
+        this.uri = uri; // URI used to make service calls
     }
 }

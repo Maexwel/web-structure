@@ -1,10 +1,8 @@
-export default class GraphQLService {
-    constructor(client) {
-        this.client = client; // client used to make requests (such as Apollo client)
-    }
+import Service from "./Service";
 
-    // Retrieve the authToken from the localStorage
-    getAuthToken() {
-        return localStorage.getItem("SERVICE_AUTH_TOKEN");
+export default class GraphQLService extends Service {
+    constructor(client) {
+        super();
+        this.client = client; // client used to make requests (such as Apollo client)
     }
 }
