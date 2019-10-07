@@ -1,6 +1,7 @@
 export const routes = {
     APP_ROUTE: {
         path: '/',
-        name: 'APP'
+        name: 'APP',
+        displayText: "App main route"
     }
 }

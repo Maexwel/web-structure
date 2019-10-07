@@ -138,7 +138,8 @@ Here is a what should contain the route.js file :
 {
     "APP_ROUTE": {
         path: '/',
-        name: 'APP'
+        name: 'APP',
+        displayText : 'App'
     }
 }
 ```
