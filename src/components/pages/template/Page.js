@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { routes as C } from '../../../router/routes';
 import clsx from 'clsx';
 import { createStyles, makeStyles, useTheme } from '@material-ui/core/styles';
-import { Drawer, Grid, AppBar, Toolbar, List, ListItemText, ListItemIcon, ListItem, IconButton, Divider, Typography, CssBaseline } from '@material-ui/core';
+import { Drawer, Grid, AppBar, Toolbar, List, ListItemText, ListItemIcon, ListItem, IconButton, Divider, CssBaseline } from '@material-ui/core';
 import { AccountCircleTwoTone, VisibilityTwoTone, ChevronRight, ChevronLeft, Menu } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import { updateViewAction } from '../../../store/actions/viewActions';
@@ -137,11 +137,6 @@ const Page = (props) => {
                             >
                                 <Menu />
                             </IconButton>
-                        </Grid>
-                        <Grid item>
-                            <Typography variant="h5">
-                                App Title
-                            </Typography>
                         </Grid>
                         <Grid item>
                             <BorderedButton label="Login" onClick={() => { }} />

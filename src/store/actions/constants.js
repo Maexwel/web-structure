@@ -1,3 +1,4 @@
 export const constants = {
-    "UPDATE_VIEW": "UPDATE_VIEW",
+    CLEAR_ROOT: "CLEAR_ROOT",
+    UPDATE_VIEW: "UPDATE_VIEW",
 };
