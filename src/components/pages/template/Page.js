@@ -7,7 +7,7 @@ import { AccountCircleTwoTone, VisibilityTwoTone, ChevronRight, ChevronLeft, Men
 import { connect } from 'react-redux';
 import { updateViewAction } from '../../../store/actions/viewActions';
 import { withRouter } from 'react-router-dom';
-import { BorderedButton } from '../../ui-kit/buttons/BorderedButton'
+import { BorderedButton } from '../../ui-kit/buttons/BorderedButton';
 
 const drawerWidth = 240;
 
