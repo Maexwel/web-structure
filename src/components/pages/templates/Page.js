@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import { routes as C } from '../../../router/routes';
 import clsx from 'clsx';
 import { createStyles, makeStyles, useTheme } from '@material-ui/core/styles';
-import { Drawer, Grid, AppBar, Toolbar, List, ListItemText, ListItemIcon, ListItem, IconButton, Divider, CssBaseline } from '@material-ui/core';
-import { AccountCircleTwoTone, VisibilityTwoTone, ChevronRight, ChevronLeft, Menu } from '@material-ui/icons';
+import { Drawer, Grid, AppBar, Toolbar, List, ListItemText, ListItemIcon, ListItem, IconButton, Divider, CssBaseline, Typography } from '@material-ui/core';
+import { AccountCircleTwoTone, ChevronRight, ChevronLeft, Menu } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import { updateViewAction } from '../../../store/actions/viewActions';
 import { withRouter } from 'react-router-dom';
 import { BorderedButton } from '../../ui-kit/buttons/BorderedButton';
 
-const drawerWidth = 240;
+const drawerWidth = 220;
 
 const useStyles = makeStyles((theme) =>
     createStyles({
@@ -35,9 +35,6 @@ const useStyles = makeStyles((theme) =>
                 duration: theme.transitions.duration.enteringScreen,
             }),
         },
-        brand: {
-            fontSize: "3em"
-        },
         menuButton: {
             marginRight: 36,
         },
@@ -62,9 +59,9 @@ const useStyles = makeStyles((theme) =>
                 duration: theme.transitions.duration.leavingScreen,
             }),
             overflowX: 'hidden',
-            width: theme.spacing(7) + 1,
+            width: 0, // The drawer close isn't displayed if sm
             [theme.breakpoints.up('sm')]: {
-                width: theme.spacing(9) + 1,
+                width: theme.spacing(8),
             },
         },
         toolbar: {
@@ -159,8 +156,9 @@ const Page = (props) => {
                 open={open}
             >
                 <div className={classes.toolbar}>
-                    <VisibilityTwoTone
-                        className={classes.brand} />
+                    <Typography component="h5">
+                        App brand
+                            </Typography>
                     <IconButton onClick={handleDrawerClose}>
                         {theme.direction === 'rtl' ? <ChevronRight /> : <ChevronLeft />}
                     </IconButton>
@@ -169,7 +167,11 @@ const Page = (props) => {
                 <List>
                     {currentPage ?
                         links.map((link, index) => (
-                            <DrawerLink key={index} {...link} isCurrent={currentPage.name === link.name} history={history} />
+                            <DrawerLink
+                                key={index}
+                                {...link}
+                                isCurrent={currentPage.name === link.name}
+                                history={history} />
                         )) : null}
                 </List>
             </Drawer>

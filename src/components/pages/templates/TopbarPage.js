@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { routes as C } from '../../../router/routes';
-import { makeStyles ,useTheme} from '@material-ui/core/styles';
+import { makeStyles, useTheme } from '@material-ui/core/styles';
 import { AppBar, Tabs, Tab, Box } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { updateViewAction } from '../../../store/actions/viewActions';
@@ -20,39 +20,49 @@ const useStyles = makeStyles(theme => ({
 }));
 // Base Page template of the application
 const TopbarPage = (props) => {
-    const { component: Component, path, name, displayText, viewToState, currentPage, history } = props; // Component to inject
+    const { component: Component, path, name, displayText, viewToState, history } = props; // Component to inject
     const classes = useStyles();
     const theme = useTheme();
     const [value, setValue] = React.useState(0);
-
-    useEffect(() => {
-        viewToState({ currentPage: { path, name, displayText } }); // set the current page (route = { path: '/', name: '/' })
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [path, name])
 
     // Main menu's links
     const links = [
         {
             icon: 'TODO',
             ...C.APP_ROUTE
-        },
-    ]
+        }
+    ];
 
+    useEffect(() => {
+        viewToState({ currentPage: { path, name, displayText } }); // set the current page (route = { path: '/', name: '/' })
+        setValue(links.findIndex(l => l.name === name)); // set the tab value when navigation happen
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [path, name])
+
+    // Handle the tab value change
     const handleChange = (event, newValue) => {
         setValue(newValue);
     };
 
     return (
         <div className={classes.root}>
-            <AppBar position="fixed">
-                <Tabs value={value} onChange={handleChange} aria-label="simple tabs example">
-                    <Tab label="Item One" />
-                    <Tab label="Item Two" />
-                    <Tab label="Item Three" />
+            <AppBar
+                position="fixed">
+                <Tabs
+                    value={value}
+                    onChange={handleChange}
+                    aria-label="Topbar tab">
+                    {links.map(link => (
+                        <TabLink
+                            {...link}
+                            key={link.name}
+                            history={history}
+                        />
+                    ))}
                 </Tabs>
             </AppBar>
             {/** Component injection */}
-            <Box  m={theme.spacing(0.8)}>
+            <Box m={theme.spacing(0.8)}>
                 <Component {...props} />
             </Box>
         </div>
@@ -74,3 +84,18 @@ const mapDispatchToProps = dispatch => {
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(TopbarPage));
+
+// // //
+// Link displayed in the tabs (appBar)
+const TabLink = ({ path, displayText, icon, name, history }) => {
+
+    const navigationClicked = (path) => {
+        history.push(path); // Redirect to "path"
+    }
+
+    return (
+        <Tab
+            label={displayText}
+            onClick={() => navigationClicked(path)} />
+    )
+}

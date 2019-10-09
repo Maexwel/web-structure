@@ -90,8 +90,9 @@ The component structure is really simple :
 ```
 * components
     * pages
-        * template
+        * templates
             - Page.js
+            - TopbarPage.js
         - index.js
     * ui-kit
 ```
@@ -101,7 +102,7 @@ For example, if you create a Button component, this button should be in **/compo
 Like this you can have reusable ui components easily configured.
 Be aware, those ui components should only be there for ui, they should'nt contain the logic of the app inside.
 
-In the other hand, the **/components/pages** folder is used to provide a way to store all the pages of the application. The **/components/pages/template** folder must contain the base definition of a *Page* (containing the base of routing logic and Redux's store connexion).
+In the other hand, the **/components/pages** folder is used to provide a way to store all the pages of the application. The **/components/pages/template** folder must contain the base definition of a *Page* (containing the base of routing logic and Redux's store connexion). In this folder, there already are some templates of pages ready.
 
 ## Redux structure and configuration
 The redux structure and configuration is this one :
@@ -163,7 +164,7 @@ It is important to build an efficient an reusable way to make those call.
 
 The remote service structure is the following :
 ```
-* service (folder for remote service)
+* service
     - RESTService.js
     - GraphQLService.js
     - ...Service.js
