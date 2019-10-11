@@ -8,7 +8,7 @@ import TopbarPage from '../components/pages/templates/TopbarPage';
 const routes = () => (
     <BrowserRouter>
         <Switch>
-            <Page  exact {...ROUTES.APP_ROUTE} component={AppPage} />
+            <Page exact {...ROUTES.APP_ROUTE} component={AppPage} />
             <TopbarPage exact {...ROUTES.APP_ROUTE} component={AppPage} />
         </Switch>
     </BrowserRouter>

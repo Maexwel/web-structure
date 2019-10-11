@@ -138,6 +138,7 @@ Here is a what should contain the route.js file :
 ```
 {
     "APP_ROUTE": {
+        icon: <IconComponent>,
         path: '/',
         name: 'APP',
         displayText : 'App'

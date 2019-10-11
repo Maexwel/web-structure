@@ -3,7 +3,7 @@ import { routes as C } from '../../../router/routes';
 import clsx from 'clsx';
 import { createStyles, makeStyles, useTheme } from '@material-ui/core/styles';
 import { Drawer, Grid, AppBar, Toolbar, List, ListItemText, ListItemIcon, ListItem, IconButton, Divider, CssBaseline, Typography } from '@material-ui/core';
-import { AccountCircleTwoTone, ChevronRight, ChevronLeft, Menu } from '@material-ui/icons';
+import { ChevronRight, ChevronLeft, Menu } from '@material-ui/icons';
 import { connect } from 'react-redux';
 import { updateViewAction } from '../../../store/actions/viewActions';
 import { withRouter } from 'react-router-dom';
@@ -92,12 +92,7 @@ const Page = (props) => {
     const [open, setOpen] = React.useState(false);
 
     // Main menu's links
-    const links = [
-        {
-            icon: <AccountCircleTwoTone />,
-            ...C.APP_ROUTE
-        },
-    ]
+    const links = Object.keys(C).map(key => C[key])
 
     const handleDrawerOpen = () => {
         setOpen(true);

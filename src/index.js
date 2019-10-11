@@ -1,10 +1,10 @@
 import 'core-js';
 import 'react-app-polyfill/stable';
 import 'react-app-polyfill/ie11'; // polyfills
+import 'typeface-roboto'; // Font
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { ThemeProvider } from '@material-ui/styles'; // Design system provider
-import 'typeface-roboto'; // Font
 import * as serviceWorker from './serviceWorker';
 import { Provider } from 'react-redux'; // Redux provider
 import { theme } from './theme/theme'; // Custom theme

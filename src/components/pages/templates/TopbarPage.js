@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
+import clsx from 'clsx';
 import { routes as C } from '../../../router/routes';
 import { makeStyles, useTheme } from '@material-ui/core/styles';
-import { AppBar, Tabs, Tab, Box } from '@material-ui/core';
+import { AppBar, Box, Grid, Toolbar, IconButton, Typography } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { updateViewAction } from '../../../store/actions/viewActions';
 import { withRouter } from 'react-router-dom';
+import { BorderedButton } from '../../ui-kit/buttons/BorderedButton';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -16,53 +18,62 @@ const useStyles = makeStyles(theme => ({
         padding: theme.spacing(2),
         marginTop: theme.spacing(8),
         width: "100%"
+    },
+    link: {
+        borderRadius: "0px",
+        borderBottom: "2px",
+    },
+    linkSelected: {
+        borderBottom: "2px solid",
+        borderColor: theme.palette.secondary.main
     }
 }));
 // Base Page template of the application
 const TopbarPage = (props) => {
-    const { component: Component, path, name, displayText, viewToState, history } = props; // Component to inject
+    const { component: Component, path, name, displayText, viewToState, history, currentPage } = props; // Component to inject
     const classes = useStyles();
     const theme = useTheme();
-    const [value, setValue] = React.useState(0);
 
     // Main menu's links
-    const links = [
-        {
-            icon: 'TODO',
-            ...C.APP_ROUTE
-        }
-    ];
+    const links = Object.keys(C).map(key => C[key])
 
     useEffect(() => {
         viewToState({ currentPage: { path, name, displayText } }); // set the current page (route = { path: '/', name: '/' })
-        setValue(links.findIndex(l => l.name === name)); // set the tab value when navigation happen
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [path, name])
-
-    // Handle the tab value change
-    const handleChange = (event, newValue) => {
-        setValue(newValue);
-    };
 
     return (
         <div className={classes.root}>
             <AppBar
                 position="fixed">
-                <Tabs
-                    value={value}
-                    onChange={handleChange}
-                    aria-label="Topbar tab">
-                    {links.map(link => (
-                        <TabLink
-                            {...link}
-                            key={link.name}
-                            history={history}
-                        />
-                    ))}
-                </Tabs>
+                <Toolbar>
+                    <Grid
+                        container
+                        direction="row"
+                        justify="flex-start">
+                        {currentPage ?
+                            links.map(link => (
+                                <TopbarLink
+                                    key={link.name}
+                                    {...link}
+                                    isCurrent={currentPage.name === link.name}
+                                    history={history} />
+                            ))
+                            : null}
+                    </Grid>
+                    <Grid
+                        container
+                        justify="flex-end"
+                        direction="row">
+                        <Grid item>
+                            <BorderedButton
+                                label="Login" />
+                        </Grid>
+                    </Grid>
+                </Toolbar>
             </AppBar>
             {/** Component injection */}
-            <Box m={theme.spacing(0.8)}>
+            <Box m={theme.spacing(1.2)}>
                 <Component {...props} />
             </Box>
         </div>
@@ -86,16 +97,30 @@ const mapDispatchToProps = dispatch => {
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(TopbarPage));
 
 // // //
-// Link displayed in the tabs (appBar)
-const TabLink = ({ path, displayText, icon, name, history }) => {
+// Link displayed in the topbar (appBar)
+const TopbarLink = ({ path, displayText, icon, name, history, isCurrent }) => {
+    const classes = useStyles();
 
     const navigationClicked = (path) => {
         history.push(path); // Redirect to "path"
     }
 
     return (
-        <Tab
-            label={displayText}
-            onClick={() => navigationClicked(path)} />
+        <Grid
+            item
+            onClick={() => navigationClicked(path)} >
+            <IconButton
+                color="inherit"
+                disableFocusRipple={true}
+                className={clsx(classes.link, {
+                    [classes.linkSelected]: isCurrent
+                })}
+            >
+                {icon}
+                <Typography component="h6" >
+                    {displayText}
+                </Typography>
+            </IconButton>
+        </Grid>
     )
 }
