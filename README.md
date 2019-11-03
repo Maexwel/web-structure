@@ -67,6 +67,8 @@ First of all, thanks to all of those libraries that this project is using :
             - index.js
         * theme
             - theme.js
+        * util
+            - LocalStorageManager.js
     - package.json
 ```
 
