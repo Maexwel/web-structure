@@ -5,4 +5,8 @@ export default class RESTService extends Service {
         super();
         this.uri = uri; // URI used to make service calls
     }
+
+    getUri = () => {
+        return this.uri;
+    }
 }

@@ -23,6 +23,7 @@ Here are the main principles bootstraped :
   - [Routing structure](#routing-structure)
   - [UI base kit configured](#ui-base-kit-configured)
   - [Remote service configuration](#remote-service-configuration)
+  - [Util classes](#util-classes)
 
 ## Libraries
 First of all, thanks to all of those libraries that this project is using :
@@ -80,7 +81,7 @@ First of all, thanks to all of those libraries that this project is using :
 
 ## Base configuration
 The base configuration of the app include :
- - env files injection (dev, production). You can configure your env variables in the .env files (.env.dev for dev, .env.prod for production)
+ - env files injection (dev, production). You can configure your env variables in the .env file
  - web.config configuration (https redirection and router redirection)
  - **index.js** configuration (entry point of the app)
 
@@ -182,7 +183,7 @@ export default class ExampleService extends RESTService {
     fetch(){
         return new Promise(async (resolve, reject) => {
             try{
-                const {data} = await axios.get(super.uri, {headers: { Authorization : super.getAuthToken() }});
+                const {data} = await axios.get(super.getUri(), {headers: { Authorization : super.getAuthToken() }});
                 resolve(data);
             }catch(err){
                 reject(err);
@@ -217,3 +218,10 @@ Properties | Type | Description
 --- | --- | ---
 `client` | *object* | Should be given in the constructor. The client is the GraphQL client provided by a library like **Apollo**. *You have to install your client provider if you use the GraphQLService*
 `getAuthToken` | *Function* | Is used to access the authToken for the remote calls.
+
+## Util classes
+There are some util classes configured to make easier all the application.
+
+Class | Description
+--- | ---
+`LocalStorageManager` | Class used to manager asyncronously the localStoage
