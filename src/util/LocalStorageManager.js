@@ -3,7 +3,7 @@
 export default class LocalStorageManager {
     constructor() {
         this.KEYS = {
-            "MY_KEY": "key"
+            "LANG_DATA": "lang_data"
         }
     }
 

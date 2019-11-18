@@ -1,10 +1,12 @@
 import { combineReducers } from 'redux';
 import { view } from './viewReducer';
-import {constants as C} from '../actions/constants';
+import { lang } from './langReducer';
+import { constants as C } from '../actions/constants';
 
 /** BASE OF ALL REDUCERS */
-const appReducer=  combineReducers({
+const appReducer = combineReducers({
     view, // { currentPage: { path, name, displayText} }
+    lang, // { selectedLang, data, translation }
 });
 
 // Root reducer is used to clear the whole store. This is used for logout actions

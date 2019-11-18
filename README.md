@@ -22,6 +22,7 @@ Here are the main principles bootstraped :
   - [Redux structure and configuration](#redux-structure-and-configuration)
   - [Routing structure](#routing-structure)
   - [UI base kit configured](#ui-base-kit-configured)
+  - [Multi-lang configuration](#multi-lang-configuration)
   - [Remote service configuration](#remote-service-configuration)
   - [Util classes](#util-classes)
 
@@ -162,6 +163,31 @@ The theme is injected using a *ThemeProvider* component.
 
 Then, for the ui-kit, you just have to define your ui-components (button, input, ...) in the **/components/ui-kit** folder.
 
+## Multi-lang configuration
+Configuration of a lang file using Redux.
+The lang file is located in */lang/lang.json*.
+It's a JSON file of this format : 
+´´´
+{
+    "LANG_CONSTANT":{
+        "fr":"constante",
+        "en":"constant"
+    }
+}
+´´´
+
+The connexion with redux is already made. There is an object in the store named *lang*. This object contains what you should use to work with differents langs.
+Content of the lang object in redux : 
+```
+{
+    translation,
+    data,
+    selectedLang
+}
+```
+
+To integrate the lang picking in your application, you just have to use the *LangPicker* component. This provide a component making all the changes and translation for you. You can customize it.
+
 ## Remote service configuration
 Closely all web applications are making HTTP calls to web APIs (such as REST calls, SOAP calls, GraphQL calls).
 It is important to build an efficient an reusable way to make those call.
@@ -209,21 +235,21 @@ export default class ExampleService extends RESTService {
 
 RESTService class : 
 
-Properties | Type | Description
---- | --- | ---
-`uri` | *string* | Should be given in the constructor. The uri is the endpoint for all the API calls.
-`getAuthToken` | *Function* | Is used to access the authToken for the remote calls.
+| Properties     | Type       | Description                                                                        |
+| -------------- | ---------- | ---------------------------------------------------------------------------------- |
+| `uri`          | *string*   | Should be given in the constructor. The uri is the endpoint for all the API calls. |
+| `getAuthToken` | *Function* | Is used to access the authToken for the remote calls.                              |
 
 GraphQLService class :
 
-Properties | Type | Description
---- | --- | ---
-`client` | *object* | Should be given in the constructor. The client is the GraphQL client provided by a library like **Apollo**. *You have to install your client provider if you use the GraphQLService*
-`getAuthToken` | *Function* | Is used to access the authToken for the remote calls.
+| Properties     | Type       | Description                                                                                                                                                                          |
+| -------------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `client`       | *object*   | Should be given in the constructor. The client is the GraphQL client provided by a library like **Apollo**. *You have to install your client provider if you use the GraphQLService* |
+| `getAuthToken` | *Function* | Is used to access the authToken for the remote calls.                                                                                                                                |
 
 ## Util classes
 There are some util classes configured to make easier all the application.
 
-Class | Description
---- | ---
-`LocalStorageManager` | Class used to manager asyncronously the localStoage
+| Class                 | Description                                         |
+| --------------------- | --------------------------------------------------- |
+| `LocalStorageManager` | Class used to manager asyncronously the localStoage |
