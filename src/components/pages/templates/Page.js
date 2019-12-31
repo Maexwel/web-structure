@@ -2,8 +2,7 @@ import React, { useEffect } from 'react';
 import { routes as C } from '../../../router/routes';
 import clsx from 'clsx';
 import { createStyles, makeStyles, useTheme } from '@material-ui/core/styles';
-import { Drawer, Grid, AppBar, Toolbar, List, ListItemText, ListItemIcon, ListItem, IconButton, Divider, CssBaseline, Typography } from '@material-ui/core';
-import { ChevronRight, ChevronLeft, Menu } from '@material-ui/icons';
+import { Drawer, Grid, AppBar, Toolbar, List, ListItemText, ListItemIcon, ListItem, IconButton, Divider, CssBaseline, Typography, Icon } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { updateViewAction } from '../../../store/actions/viewActions';
 import { withRouter } from 'react-router-dom';
@@ -128,7 +127,7 @@ const Page = (props) => {
                                     [classes.hide]: open,
                                 })}
                             >
-                                <Menu />
+                                <Icon>menu</Icon>
                             </IconButton>
                         </Grid>
                         <Grid item>
@@ -159,7 +158,7 @@ const Page = (props) => {
                         App brand
                             </Typography>
                     <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'rtl' ? <ChevronRight /> : <ChevronLeft />}
+                        {theme.direction === 'rtl' ? <Icon>chevron_right</Icon> : <Icon>chevron_left</Icon>}
                     </IconButton>
                 </div>
                 <Divider />
@@ -209,7 +208,7 @@ const DrawerLink = ({ path, displayText, icon, isCurrent, history }) => {
     const classes = useStyles();
     return (
         <ListItem className={clsx(null, { [classes.selectedListItem]: isCurrent })} onClick={() => navigationClicked(path)} button >
-            <ListItemIcon className={clsx(null, { [classes.selectedListItem]: isCurrent })}>{icon}</ListItemIcon>
+            <ListItemIcon className={clsx(null, { [classes.selectedListItem]: isCurrent })}><Icon>{icon}</Icon></ListItemIcon>
             <ListItemText className={clsx(null, { [classes.selectedListItem]: isCurrent })} primary={displayText} />
         </ListItem>
     )

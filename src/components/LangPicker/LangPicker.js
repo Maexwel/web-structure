@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import LocalStorageManager from '../../util/LocalStorageManager';
 import { updateSelectedLangAction } from '../../store/actions/langActions';
-import { Menu, MenuItem, Button, ListItemText } from '@material-ui/core';
-import { ArrowDropDown } from '@material-ui/icons';
+import { Menu, MenuItem, Button, ListItemText,Icon } from '@material-ui/core';
 
 // Component used to define and change the selected lang
 // This component initialize the default lang and will update the Redux store used for lang
@@ -78,7 +77,7 @@ const LangPicker = ({ selectedLang, data, translation, langToState }) => {
                 onClick={openMenu}
             >
                 <span>{getLabel(selectedLang)}</span>
-                <ArrowDropDown />
+                <Icon>arrow_drop_down</Icon>
             </Button>
             <Menu
                 id="lock-menu"
