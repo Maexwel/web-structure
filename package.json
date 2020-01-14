@@ -8,6 +8,7 @@
     "core-js": "^3.2.1",
     "dotenv": "^8.1.0",
     "env-cmd": "^10.0.1",
+    "notistack": "^0.9.7",
     "prop-types": "^15.7.2",
     "react": "^16.10.1",
     "react-app-polyfill": "^1.0.3",
