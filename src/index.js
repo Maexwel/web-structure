@@ -10,6 +10,7 @@ import { Provider } from 'react-redux'; // Redux provider
 import { theme } from './theme/theme'; // Custom theme
 import storeFactory from './store/index'; // Redux store factory
 import Router from './router/index.js'; // Main router
+import { ServiceLocatorProvider, baseServiceLocator } from './components/context'; // Service locator definition
 require('dotenv').config();
 
 const store = storeFactory();
@@ -17,7 +18,9 @@ const store = storeFactory();
 ReactDOM.render(
     <Provider store={store}>
         <ThemeProvider theme={theme}>
-            <Router />
+            <ServiceLocatorProvider value={baseServiceLocator}>
+                <Router />
+            </ServiceLocatorProvider>
         </ThemeProvider>
     </Provider>
     , document.getElementById('root'));
