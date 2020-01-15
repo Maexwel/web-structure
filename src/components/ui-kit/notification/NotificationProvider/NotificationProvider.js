@@ -74,7 +74,7 @@ const NotificationProvider = ({ children }) => {
             anchorOrigin={{ horizontal: "right", vertical: 'bottom' }}
             autoHideDuration={10000}
             content={
-                (key, message) => (<div><SnackMessage key={key} id={key} title={message.title} content={message.content} /></div>)
+                (key, message) => (<div key={key}><SnackMessage key={key} id={key} title={message.title} content={message.content} /></div>)
             }>
             {/** Render children */}
             {children}
