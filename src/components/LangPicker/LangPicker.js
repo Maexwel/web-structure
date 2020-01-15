@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { LangManager, C } from '../../lang';
+import { C } from '../../lang';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { updateSelectedLangAction } from '../../store/actions/langActions';
@@ -10,7 +10,7 @@ import { ServiceLocatorContext } from '../context';
 // This component initialize the default lang and will update the Redux store used for lang
 const LangPicker = ({ selectedLang, data, translation, langToState }) => {
     const [anchorEl, setAnchorEl] = useState(null);
-    const { localStorageManager } = useContext(ServiceLocatorContext);
+    const { localStorageManager, langManager } = useContext(ServiceLocatorContext);
 
     // Lang options
     const options = [
@@ -35,8 +35,7 @@ const LangPicker = ({ selectedLang, data, translation, langToState }) => {
 
     // Reaction to a change in the selectedLang
     useEffect(() => {
-        const manager = new LangManager();
-        const translation = manager.translate(selectedLang, data);
+        const translation = langManager.translate(selectedLang, data); // translate to selected lang
         langToState({ translation }); // Redux update translation
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedLang])
