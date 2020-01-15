@@ -1,15 +1,16 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { LangManager, C } from '../../lang';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import LocalStorageManager from '../../util/LocalStorageManager';
 import { updateSelectedLangAction } from '../../store/actions/langActions';
-import { Menu, MenuItem, Button, ListItemText,Icon } from '@material-ui/core';
+import { Menu, MenuItem, Button, ListItemText, Icon } from '@material-ui/core';
+import { ServiceLocatorContext } from '../context';
 
 // Component used to define and change the selected lang
 // This component initialize the default lang and will update the Redux store used for lang
 const LangPicker = ({ selectedLang, data, translation, langToState }) => {
     const [anchorEl, setAnchorEl] = useState(null);
+    const { localStorageManager } = useContext(ServiceLocatorContext);
 
     // Lang options
     const options = [
@@ -19,15 +20,14 @@ const LangPicker = ({ selectedLang, data, translation, langToState }) => {
 
     // on init
     useEffect(() => {
-        const storageManager = new LocalStorageManager();
-        storageManager.getItem(storageManager.KEYS.LANG_DATA)
+        localStorageManager.getItem(localStorageManager.KEYS.LANG_DATA)
             .then(({ selectedLang }) => {
                 if (data && selectedLang) {
                     langToState({ selectedLang }); // Redux set selectedLang
-                    storageManager.setItem(storageManager.KEYS.LANG_DATA, selectedLang); // local storage
+                    localStorageManager.setItem(localStorageManager.KEYS.LANG_DATA, selectedLang); // local storage
                 } else {
                     langToState({ selectedLang: C.LANG_FR }); // Redux set selectedLang (default fr)
-                    storageManager.setItem(storageManager.KEYS.LANG_DATA, C.LANG_FR); // local storage
+                    localStorageManager.setItem(localStorageManager.KEYS.LANG_DATA, C.LANG_FR); // local storage
                 }
             }); // get lang data
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -44,8 +44,7 @@ const LangPicker = ({ selectedLang, data, translation, langToState }) => {
     // Changing the selected lang
     const changeSelectedLang = (selected) => {
         langToState({ selectedLang: selected }); // Redux update selected lang
-        const storageManager = new LocalStorageManager();
-        storageManager.setItem(storageManager.KEYS.LANG_DATA, { selectedLang: selected }); // Local storage
+        localStorageManager.setItem(localStorageManager.KEYS.LANG_DATA, { selectedLang: selected }); // Local storage
     }
 
     // Get label to display

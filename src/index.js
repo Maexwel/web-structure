@@ -11,7 +11,7 @@ import { theme } from './theme/theme'; // Custom theme
 import storeFactory from './store/index'; // Redux store factory
 import Router from './router/index.js'; // Main router
 import { ServiceLocatorProvider, baseServiceLocator } from './components/context'; // Service locator definition
-import { NotificationProvider } from './components/ui-kit/notification'; // Notification provider
+import { NotificationProvider } from './components/ui-kit/notification/NotificationProvider'; // Notification provider
 require('dotenv').config();
 
 const store = storeFactory();

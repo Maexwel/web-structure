@@ -1,1 +1,1 @@
-export { default as LocalStorageManager } from './LocalStorageManager';
+export { default as LocalStorageManager, LOCAL_STORAGE_KEYS } from './LocalStorageManager';
