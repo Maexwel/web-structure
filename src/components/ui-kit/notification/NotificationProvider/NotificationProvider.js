@@ -93,7 +93,7 @@ export default NotificationProvider;
 const SnackMessage = ({ title, content, variant = 'default', id }) => {
     const classes = useStyles();
     const { closeSnackbar } = useSnackbar();
-    const [expanded, setExpanded] = useState(true);
+    const [expanded, setExpanded] = useState(false);
 
 
     // Expand the content of the snack bar on expand clicked
