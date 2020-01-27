@@ -7,7 +7,7 @@ import { connect } from 'react-redux';
 import { updateViewAction } from '../../../store/actions/viewActions';
 import { withRouter } from 'react-router-dom';
 import { BorderedButton } from '../../ui-kit/buttons/BorderedButton';
-import LangPicker from '../../LangPicker/LangPicker';
+import { LangPicker } from '../../LangPicker';
 
 const drawerWidth = 220;
 

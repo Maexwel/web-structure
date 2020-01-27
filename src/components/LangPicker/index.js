@@ -1,1 +1,1 @@
-export { default as BorderedButton } from './BorderedButton';
+export { default as LangPicker } from './LangPicker';

@@ -29,6 +29,11 @@ const LangPicker = ({ selectedLang, data, translation, langToState }) => {
                     langToState({ selectedLang: C.LANG_FR }); // Redux set selectedLang (default fr)
                     localStorageManager.setItem(localStorageManager.KEYS.LANG_DATA, C.LANG_FR); // local storage
                 }
+            })
+            .catch((err) => {
+                // Error is thrown, there is no items in local storage
+                langToState({ selectedLang: C.LANG_FR }); // Redux set selectedLang (default fr)
+                localStorageManager.setItem(localStorageManager.KEYS.LANG_DATA, C.LANG_FR); // local storage
             }); // get lang data
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
@@ -44,6 +49,7 @@ const LangPicker = ({ selectedLang, data, translation, langToState }) => {
     const changeSelectedLang = (selected) => {
         langToState({ selectedLang: selected }); // Redux update selected lang
         localStorageManager.setItem(localStorageManager.KEYS.LANG_DATA, { selectedLang: selected }); // Local storage
+        handleClose(); // Close picker
     }
 
     // Get label to display

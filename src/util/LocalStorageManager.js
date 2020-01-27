@@ -1,3 +1,8 @@
+export const LOCAL_STORAGE_KEYS = {
+    AUTH_TOKEN: "auth_token",
+    LANG_DATA: "lang_data",
+}; // Local storage keys constant
+
 // Local storage module
 // This module is used to manager LocalStorage using async call and stringification
 export default class LocalStorageManager {
@@ -49,9 +54,3 @@ export default class LocalStorageManager {
         }
     };
 }
-
-
-export const LOCAL_STORAGE_KEYS = {
-    AUTH_TOKEN: "auth_token",
-    LANG_DATA: "lang_data",
-}; // Local storage keys constant
