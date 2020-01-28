@@ -66,7 +66,7 @@ const ComboBox = ({ update, multi = false, options = [], disabled = false, value
                     colors: {
                         ...theme.colors, // use base colors
                         primary25: appTheme.palette.grey[200], // hover color
-                        primary: appTheme.palette.secondary.main, // selected color/focus color (for the control)
+                        primary: appTheme.palette.primary.main, // selected color/focus color (for the control)
                         neutral50: appTheme.palette.text.hint, // input placeholder color
                     }
                 })}

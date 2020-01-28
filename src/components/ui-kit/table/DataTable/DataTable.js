@@ -45,8 +45,8 @@ const useToolbarStyles = makeStyles((theme) =>
         highlight:
             theme.palette.type === 'light'
                 ? {
-                    color: theme.palette.secondary.main,
-                    backgroundColor: theme.palette.secondary.light,
+                    color: theme.palette.primary.main,
+                    backgroundColor: theme.palette.primary[500],
                 }
                 : {
                     color: theme.palette.text.primary,
@@ -54,8 +54,6 @@ const useToolbarStyles = makeStyles((theme) =>
                 },
         title: {
             flex: '1 1 100%',
-        },
-        titleHighlight: {
             color: theme.palette.common.white,
         },
     })
@@ -68,7 +66,7 @@ const DataTable = ({ title, columns, translation, onSelectChanged = () => { }, d
     const classes = useStyles();
     // State
     const [page, setPage] = React.useState(0); // Current page in the table
-    const [rowsPerPage, setRowsPerPage] = React.useState(25); // Number of rows per page
+    const [rowsPerPage, setRowsPerPage] = React.useState(10); // Number of rows per page
     const [order, setOrder] = React.useState('asc'); // Order ["asc","desc"]
     const [orderBy, setOrderBy] = React.useState(''); // Order by (name of the filed to order by)
     const [selected, setSelected] = React.useState([]); // Selected items in the table
@@ -94,17 +92,20 @@ const DataTable = ({ title, columns, translation, onSelectChanged = () => { }, d
 
     // Handle select one click
     const handleSelectOneClick = (item) => {
+        let updated = []; // Will contains the selected values updated
         if (selected.find(value => value.id === item.id)) {
             // already selected, remove it
-            setSelected(selected.filter(value => value.id !== item.id)); // Remove item from selected items
+            updated = selected.filter(value => value.id !== item.id); // Remove item from selected items
         } else {
-            setSelected([...selected, item]); // Push new item in selected items
+            updated = [...selected, item]; // Push new item in selected items
         }
+        setSelected(updated); // Update selected items
+        onSelectChanged(updated); // Trigger update to upper component
     };
 
     // Handle click on "select all"
     const handleSelectAllClick = ({ target }) => {
-        if (target.checked) {
+        if (target && target.checked) {
             setSelected(data);
             onSelectChanged(data); // Trigger selection changed
         } else {
@@ -185,10 +186,10 @@ const DataTable = ({ title, columns, translation, onSelectChanged = () => { }, d
                                                 {column.isAction ?
                                                     // action to display
                                                     column.component(row) // Render component passing row item
-                                        :
-                                        // classic data display
-                                        column.format ? column.format(value) : value
-                                    }
+                                                    :
+                                                    // classic data display
+                                                    column.format ? column.format(value) : value
+                                                }
                                             </TableCell>
                                         );
                                     })}
@@ -206,7 +207,8 @@ const DataTable = ({ title, columns, translation, onSelectChanged = () => { }, d
                 page={page}
                 onChangePage={handleChangePage}
                 onChangeRowsPerPage={handleChangeRowsPerPage}
-                labelRowsPerPage={translation["DATATABLE_ROWS_PER_PAGE"]} />
+                labelRowsPerPage={translation["DATATABLE_ROWS_PER_PAGE"]}
+                labelDisplayedRows={({ from, to, count }) => `${from}-${to} | ${count}`} />
         </Paper>
     )
 };
@@ -229,10 +231,9 @@ DataTable.propTypes = {
     translation: PropTypes.object, // Translation provided by redux
     actions: PropTypes.arrayOf(PropTypes.shape({
         component: PropTypes.func, // Component to display
-        requireCheck: PropTypes.bool, // If true, the action is only displayed if items are checked
     })), // Action are items displayed in the toolbar to trigger actions in the table.
 };
-// // // 
+// // //
 // Redux connexion
 const mapStateToProps = state => ({
     translation: state.lang.translation, // Current location in the app
@@ -248,16 +249,12 @@ const EnhancedTableToolbar = ({ title, translation, selectedItems = [], numSelec
 
     return (
         <Toolbar
-            className={clsx(classes.root, {
-                [classes.highlight]: numSelected > 0,
-            })}>
-            <Grid alignItems="center" justify="space-around">
+            className={clsx(classes.root, classes.highlight)}>
+            <Grid container alignItems="center" justify="space-between">
                 {/** Title / Num selected */}
                 <Grid item>
                     {numSelected > 0 ?
-                        (<Typography className={clsx(classes.title, {
-                            [classes.titleHighlight]: numSelected > 0,
-                        })} color="inherit" variant="subtitle1">
+                        (<Typography className={clsx(classes.title)} color="inherit" variant="subtitle1">
                             {`${numSelected} ${translation["DATATABLE_NBR_ROW_SELECTED"]}`}
                         </Typography>)
                         :
@@ -269,7 +266,7 @@ const EnhancedTableToolbar = ({ title, translation, selectedItems = [], numSelec
                 <Grid item>
                     {actions.map((action, index) =>
                         (
-                            < div key={index}>{action.component(selectedItems)}</div>
+                            <div key={index}>{action.component(selectedItems)}</div>
                         ))}
                 </Grid>
             </Grid>
@@ -284,7 +281,6 @@ EnhancedTableToolbar.propTypes = {
     numSelected: PropTypes.number.isRequired,
     actions: PropTypes.arrayOf(PropTypes.shape({
         component: PropTypes.func, // Component to display
-        requireCheck: PropTypes.bool, // If true, the action is only displayed if items are checked
     })),
 };
 
@@ -348,7 +344,7 @@ EnhancedTableHead.propTypes = {
         align: PropTypes.oneOf(["right", "left", "center"]), // Where to align data in cell
         format: PropTypes.func, // Format function
         isAction: PropTypes.bool, // If true, that means that this row contains an "Action". Action are button to trigger something
-        component: PropTypes.node, // Component is a React node. It is required if isAction is true
+        component: PropTypes.func, // Component is a func that return a react node. It is required if isAction is true
         onClick: PropTypes.func, // Function called on click on the item in the column (used for actions mainly)
-    })), // Head definition
+    })).isRequired, // Head definition
 };

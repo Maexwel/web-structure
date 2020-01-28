@@ -18,6 +18,7 @@ const AppPage = () => {
         <div>
             <DataTable
                 title="Test"
+                onSelectChanged={(v) => console.log(v)}
                 columns={[
                     {
                         label: "test1",
@@ -29,7 +30,7 @@ const AppPage = () => {
                         id: "actions1id",
                         align: "center",
                         isAction: true,
-                        component: (item) => (<Button onClick={(e) => alert(JSON.stringify(JSON.stringify(item)))}>testButton</Button>),
+                        component: (item) => (<Button>testButton</Button>),
                     }
                 ]}
                 data={[
@@ -42,8 +43,7 @@ const AppPage = () => {
                 actions={
                     [
                         {
-                            component: (selectedItems) => (<Button onClick={(e) => alert(JSON.stringify(selectedItems))}>testaction</Button>),
-                            requiredCheck: true,
+                            component: (selectedItems) => (<Button disabled={selectedItems.length <= 0} onClick={(e) => alert(JSON.stringify(selectedItems))}>testaction</Button>),
                         }
                     ]
                 }
