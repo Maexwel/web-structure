@@ -115,6 +115,7 @@ const Page = (props) => {
                 <Toolbar>
                     <Grid
                         justify="space-between"
+                        alignItems="center"
                         container
                     >
                         <Grid item>
