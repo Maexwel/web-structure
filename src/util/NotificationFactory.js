@@ -5,7 +5,7 @@ export default class NotificationFactory {
     _variants = ['default', 'success', 'info', 'error']; // Variant possibilities
 
     // Build error object and stringify them
-    buildNotification = (title = '', content = '', variant = 'default') => {
+    buildNotification = ({ title = '', content = '', variant = 'default' }) => {
         // Check validity of variant
         if (!this._variants.includes(variant)) {
             variant = 'default'; // Variant was not valid, make it 'default'

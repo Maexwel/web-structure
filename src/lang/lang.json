@@ -6,5 +6,13 @@
     "EN_LANG": {
         "fr": "Anglais",
         "en": "English"
+    },
+    "DATATABLE_ROWS_PER_PAGE": {
+        "fr": "Lignes par page",
+        "en": "Rows per page"
+    },
+    "DATATABLE_NBR_ROW_SELECTED": {
+        "fr": "ligne(s) sélectionnée(s)",
+        "en": "row(s) selected"
     }
 }
