@@ -29,8 +29,7 @@ const AppPage = () => {
                         id: "actions1id",
                         align: "center",
                         isAction: true,
-                        component: (<Button>testButton</Button>),
-                        onClick: (e, v) => alert(JSON.stringify(v)),
+                        component: (item) => (<Button onClick={(e) => alert(JSON.stringify(JSON.stringify(item)))}>testButton</Button>),
                     }
                 ]}
                 data={[
@@ -43,7 +42,7 @@ const AppPage = () => {
                 actions={
                     [
                         {
-                            component: <Button>testaction</Button>,
+                            component: (selectedItems) => (<Button onClick={(e) => alert(JSON.stringify(selectedItems))}>testaction</Button>),
                             requiredCheck: true,
                         }
                     ]

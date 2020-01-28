@@ -151,6 +151,7 @@ const DataTable = ({ title, columns, translation, onSelectChanged = () => { }, d
             <EnhancedTableToolbar
                 title={title}
                 translation={translation}
+                selectedItems={selected}
                 numSelected={selected.length}
                 actions={actions} />
             {/** Table */}
@@ -183,13 +184,11 @@ const DataTable = ({ title, columns, translation, onSelectChanged = () => { }, d
                                             <TableCell key={index} align={column.align}>
                                                 {column.isAction ?
                                                     // action to display
-                                                    <div onClick={e => column.onClick(e, value)}>
-                                                        {column.component}
-                                                    </div>
-                                                    :
-                                                    // classic data display
-                                                    column.format ? column.format(value) : value
-                                                }
+                                                    column.component(row) // Render component passing row item
+                                        :
+                                        // classic data display
+                                        column.format ? column.format(value) : value
+                                    }
                                             </TableCell>
                                         );
                                     })}
@@ -214,7 +213,7 @@ const DataTable = ({ title, columns, translation, onSelectChanged = () => { }, d
 
 DataTable.propTypes = {
     data: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string, // Unique id of item. Used to filter selection
+        id: PropTypes.string.isRequired, // Unique id of item. Used to filter selection
     })).isRequired, // Array of data with fields matching the id of columns
     columns: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.string, // Unique identifier of the column (it s already the field of the data object too)
@@ -222,15 +221,14 @@ DataTable.propTypes = {
         align: PropTypes.oneOf(["right", "left", "center"]), // Where to align data in cell
         format: PropTypes.func, // Format function
         isAction: PropTypes.bool, // If true, that means that this row contains an "Action". Action are button to trigger something
-        component: PropTypes.node, // Component is a React node. It is required if isAction is true
-        onClick: PropTypes.func, // Function called on click on the item in the column (used for actions mainly)
+        component: PropTypes.func, // Component is a React node. It is required if isAction is true
     })).isRequired,
     title: PropTypes.string.isRequired, // Title in the head of the table
     onSelectChanged: PropTypes.func, // Function called when selection changes (return the list of selected items)
     checkable: PropTypes.bool, // Define if the table can check multiple items
     translation: PropTypes.object, // Translation provided by redux
     actions: PropTypes.arrayOf(PropTypes.shape({
-        component: PropTypes.node, // Component to display
+        component: PropTypes.func, // Component to display
         requireCheck: PropTypes.bool, // If true, the action is only displayed if items are checked
     })), // Action are items displayed in the toolbar to trigger actions in the table.
 };
@@ -245,7 +243,7 @@ export default connect(mapStateToProps)(DataTable);
 // Enhanced Table Toolbar
 // Toolbar to display number of selected items in the list
 // cf https://material-ui.com/components/tables/ (Sorting and selecting)
-const EnhancedTableToolbar = ({ title, translation, numSelected = 0, actions = [] }) => {
+const EnhancedTableToolbar = ({ title, translation, selectedItems = [], numSelected = 0, actions = [] }) => {
     const classes = useToolbarStyles();
 
     return (
@@ -271,7 +269,7 @@ const EnhancedTableToolbar = ({ title, translation, numSelected = 0, actions = [
                 <Grid item>
                     {actions.map((action, index) =>
                         (
-                            < div key={index}>{action.component}</div>
+                            < div key={index}>{action.component(selectedItems)}</div>
                         ))}
                 </Grid>
             </Grid>
@@ -285,7 +283,7 @@ EnhancedTableToolbar.propTypes = {
     translation: PropTypes.object.isRequired,
     numSelected: PropTypes.number.isRequired,
     actions: PropTypes.arrayOf(PropTypes.shape({
-        component: PropTypes.node, // Component to display
+        component: PropTypes.func, // Component to display
         requireCheck: PropTypes.bool, // If true, the action is only displayed if items are checked
     })),
 };
