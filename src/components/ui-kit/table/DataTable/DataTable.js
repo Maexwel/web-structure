@@ -78,8 +78,13 @@ const DataTable = ({ title, columns, translation, loading = false, search = true
     const [filteredData, setFilteredData] = React.useState([]);
 
     // Effect
+    // When data array change, reset everything to keep consistent
     useEffect(() => {
-        setFilteredData(data);
+        setFilteredData(data); // Reset data
+        setPage(0); // Reset page
+        setOrder('asc'); // Reset order
+        setOrderBy(''); // Reset order by
+        setSelected([]); // Reset selection
     }, [data]);
 
     // Handle click on change page button
@@ -305,12 +310,14 @@ const EnhancedTableToolbar = ({ title, translation, updateItems, search = true, 
                 </Grid>
                 {/** Actions */}
                 <Grid item>
-                    <Grid container alignItems="center" justify="space-around">
+                    <Grid container alignItems="center" justify="space-around" spacing={2}>
                         {actions.map((action, index) =>
                             (
-                                <div key={index}>{action.component(selectedItems)}</div>
+                                <Grid key={index} item>
+                                    {action.component(selectedItems)}
+                                </Grid>
                             ))}
-                        {search && <Searchbar onChange={handleSearchInTable} />}
+                        {search && <Grid item><Searchbar onChange={handleSearchInTable} /></Grid>}
                     </Grid>
                 </Grid>
             </Grid>

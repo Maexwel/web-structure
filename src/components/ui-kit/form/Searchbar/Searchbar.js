@@ -20,7 +20,7 @@ const useStyles = makeStyles(theme => createStyles({
 }));
 // Custom Searchbar
 // The base is material-ui components
-const Searchbar = ({ onChange, placeholder = '', width = 300 }) => {
+const Searchbar = ({ onChange, placeholder = '' }) => {
     const classes = useStyles();
 
     // Handle change (user typing)
@@ -34,7 +34,6 @@ const Searchbar = ({ onChange, placeholder = '', width = 300 }) => {
     return (
         <Paper
             component="form"
-            style={{ width: width }}
             className={classes.root}>
             <InputBase
                 className={classes.input}
@@ -48,6 +47,5 @@ const Searchbar = ({ onChange, placeholder = '', width = 300 }) => {
 Searchbar.propTypes = {
     onChange: PropTypes.func.isRequired, // (event, value) => {}
     placeholder: PropTypes.string,
-    width: PropTypes.number,
 };
 export default Searchbar;

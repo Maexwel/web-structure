@@ -3,7 +3,8 @@ import { useSnackbar } from 'notistack';
 import { useEffect } from 'react';
 import { ServiceLocatorContext } from '../context';
 import { DataTable } from '../ui-kit';
-import { Button } from '@material-ui/core';
+import { Button, Grid } from '@material-ui/core';
+import ActionButton from '../ui-kit/buttons/ActionButton/ActionButton';
 
 const AppPage = () => {
     const { enqueueSnackbar } = useSnackbar();
@@ -11,12 +12,12 @@ const AppPage = () => {
 
     useEffect(() => {
         const errorNotification = notificationFactory.buildNotification({ title: 'Welcome message', content: 'Welcome in the web-structure template app ! Enjoy !', variant: 'success' });
-        enqueueSnackbar(errorNotification);
+        enqueueSnackbar(errorNotification, { persist: true });
     }, [enqueueSnackbar, notificationFactory]);
 
     const data = () => {
         const d = []
-        for(let i = 0; i< 10000; i++){
+        for (let i = 0; i < 10000; i++) {
             d.push({ fieldtest: `value ${i}`, id: i, field1: 'ok', field2: 'test', field3: 25, field4: '8pppp' });
         }
         return d
@@ -33,18 +34,18 @@ const AppPage = () => {
                         id: "fieldtest",
                     },
                     {
-                        label: "action1",
-                        id: "actions1id",
+                        label: "actions",
+                        id: "actions",
                         align: "center",
                         isAction: true,
-                        component: (item) => (<Button>testButton</Button>),
-                    }
+                        component: (item) => (<Grid container justify="center" alignItems="center"><Grid item><ActionButton color="primary" label="view" onClick={(e) => console.log(item)} /></Grid><Grid item><ActionButton type="icon" tip="edit item" icon="edit" label="view" onClick={() => console.log(`edit item ${item.id}`)} /></Grid></Grid>),
+                    },
                 ]}
                 data={data()}
                 actions={
                     [
                         {
-                            component: (selectedItems) => (<Button disabled={selectedItems.length <= 0} onClick={(e) => alert(JSON.stringify(selectedItems))}>testaction</Button>),
+                            component: (selectedItems) => (<ActionButton tip="action on selected items" color="secondary" label="action1" disabled={selectedItems.length <= 0} onClick={(e) => alert(JSON.stringify(selectedItems))} />),
                         }
                     ]
                 }
