@@ -1,1 +1,1 @@
-export { BorderedButton } from './BorderedButton';
+export { ActionButton } from './ActionButton';

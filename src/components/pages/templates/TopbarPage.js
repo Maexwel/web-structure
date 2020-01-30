@@ -6,7 +6,6 @@ import { AppBar, Box, Grid, Toolbar, IconButton, Typography } from '@material-ui
 import { connect } from 'react-redux';
 import { updateViewAction } from '../../../store/actions/viewActions';
 import { withRouter } from 'react-router-dom';
-import { BorderedButton } from '../../ui-kit/buttons/BorderedButton';
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -66,8 +65,6 @@ const TopbarPage = (props) => {
                         justify="flex-end"
                         direction="row">
                         <Grid item>
-                            <BorderedButton
-                                label="Login" />
                         </Grid>
                     </Grid>
                 </Toolbar>
