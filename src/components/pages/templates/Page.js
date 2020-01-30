@@ -6,7 +6,6 @@ import { Drawer, Grid, AppBar, Toolbar, List, ListItemText, ListItemIcon, ListIt
 import { connect } from 'react-redux';
 import { updateViewAction } from '../../../store/actions/viewActions';
 import { withRouter } from 'react-router-dom';
-import { BorderedButton } from '../../ui-kit/buttons/BorderedButton';
 import { LangPicker } from '../../LangPicker';
 
 const drawerWidth = 220;
@@ -132,7 +131,6 @@ const Page = (props) => {
                             </IconButton>
                         </Grid>
                         <Grid item>
-                            <BorderedButton label="Login" onClick={() => { }} />
                         </Grid>
                         <Grid item>
                             <LangPicker />
