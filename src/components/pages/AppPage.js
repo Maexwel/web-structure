@@ -3,7 +3,7 @@ import { useSnackbar } from 'notistack';
 import { useEffect } from 'react';
 import { ServiceLocatorContext } from '../context';
 import { DataTable } from '../ui-kit';
-import { Button, Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 import ActionButton from '../ui-kit/buttons/ActionButton/ActionButton';
 
 const AppPage = () => {
@@ -17,10 +17,11 @@ const AppPage = () => {
 
     const data = () => {
         const d = []
+        console.log('init')
         for (let i = 0; i < 10000; i++) {
             d.push({ fieldtest: `value ${i}`, id: i, field1: 'ok', field2: 'test', field3: 25, field4: '8pppp' });
         }
-        return d
+        return d;
     }
 
     return (

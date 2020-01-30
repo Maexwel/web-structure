@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { useTheme, createStyles, makeStyles } from '@material-ui/core/styles';
-import { InputLabel, MenuItem, Checkbox, Radio, Typography } from '@material-ui/core';
+import { InputLabel, MenuItem, Checkbox, Radio } from '@material-ui/core';
 
 // Style
 // Style
@@ -39,7 +39,9 @@ const ComboBox = ({ update, multi = false, options = [], disabled = false, value
     const handleChange = (selectedOption) => {
         try {
             if (selectedOption && selectedOption.value && selectedOption.label) {
-                update(selectedOption); // Trigger selected option update for upper component
+                if (update) {
+                    update(selectedOption); // Trigger selected option update for upper component
+                }
                 setSelectedOption(selectedOption); // update internal selected option
             }
         } catch (err) {
@@ -81,7 +83,7 @@ const ComboBox = ({ update, multi = false, options = [], disabled = false, value
 ComboBox.propTypes = {
     multi: PropTypes.bool,
     options: PropTypes.arrayOf(PropTypes.shape({
-        value: PropTypes.string, // Real value behind the label
+        value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]), // Real value behind the label
         label: PropTypes.string, // Label displayed
     })), // Options should be formated for react-select library
     disabled: PropTypes.bool,
@@ -108,7 +110,7 @@ const Option = ({ isSelected, innerProps, label, isMulti }) => {
         <div {...innerProps}>
             <MenuItem selected={isSelected}>
                 {isMulti ? <Checkbox checked={isSelected} /> : <Radio checked={isSelected} />}
-                <Typography component="p">{label}</Typography>
+                <InputLabel>{label}</InputLabel>
             </MenuItem>
         </div >
     );
@@ -116,7 +118,7 @@ const Option = ({ isSelected, innerProps, label, isMulti }) => {
 Option.propTypes = {
     innerProps: PropTypes.object, // Base props
     label: PropTypes.string,
-    value: PropTypes.string,
+    value: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
     isMulti: PropTypes.bool,
     isSelected: PropTypes.bool,
 };

@@ -201,7 +201,7 @@ const DataTable = ({ title, columns, translation, loading = false, search = true
                                     {columns.map((column, index) => {
                                         const value = column.isAction ? row : row[column.id]; // Value for the column (value is the complete row if this is an action)
                                         return (
-                                            <TableCell key={index} align={column.align}>
+                                            <TableCell size="small" key={index} align={column.align}>
                                                 {column.isAction ?
                                                     // action to display
                                                     column.component(row) // Render component passing row item

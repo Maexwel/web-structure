@@ -12,6 +12,8 @@ import storeFactory from './store/index'; // Redux store factory
 import Router from './router/index.js'; // Main router
 import { ServiceLocatorProvider, baseServiceLocator } from './components/context'; // Service locator definition
 import { NotificationProvider } from './components/ui-kit'; // Notification provider
+import { MuiPickersUtilsProvider, } from '@material-ui/pickers'; // Picker util provider
+import MomentUtils from '@date-io/moment'; // Moment utility for pickers
 require('dotenv').config();
 
 const store = storeFactory();
@@ -21,7 +23,9 @@ ReactDOM.render(
         <ThemeProvider theme={theme}>
             <ServiceLocatorProvider value={baseServiceLocator}>
                 <NotificationProvider >
-                    <Router />
+                    <MuiPickersUtilsProvider utils={MomentUtils}>
+                        <Router />
+                    </MuiPickersUtilsProvider>
                 </NotificationProvider>
             </ServiceLocatorProvider>
         </ThemeProvider>
