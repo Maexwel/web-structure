@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { Table, TableRow, TableHead, TableCell, TableBody, TablePagination, Paper, Toolbar, Typography, Checkbox, TableSortLabel, Grid } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { connect } from 'react-redux';
+import { Searchbar } from '../../form';
+import { Loading } from '../../loading';
 
 // Style def
 // Base style
@@ -15,6 +17,9 @@ const useStyles = makeStyles((theme) =>
         paper: {
             width: '100%',
             marginBottom: theme.spacing(2),
+        },
+        loading: {
+            padding: theme.spacing(2)
         },
         head: {
             color: theme.palette.common.black,
@@ -62,7 +67,7 @@ const useToolbarStyles = makeStyles((theme) =>
 // Custom overide of the Table provided by material-ui
 // The goal is to provide a DataTable API to easily display data with actions/selection
 // cf https://material-ui.com/components/tables/ for documentation
-const DataTable = ({ title, columns, translation, onSelectChanged = () => { }, data = [], checkable = true, actions = [] }) => {
+const DataTable = ({ title, columns, translation, loading = false, search = true, onSelectChanged = () => { }, data = [], checkable = true, actions = [] }) => {
     const classes = useStyles();
     // State
     const [page, setPage] = React.useState(0); // Current page in the table
@@ -70,6 +75,12 @@ const DataTable = ({ title, columns, translation, onSelectChanged = () => { }, d
     const [order, setOrder] = React.useState('asc'); // Order ["asc","desc"]
     const [orderBy, setOrderBy] = React.useState(''); // Order by (name of the filed to order by)
     const [selected, setSelected] = React.useState([]); // Selected items in the table
+    const [filteredData, setFilteredData] = React.useState([]);
+
+    // Effect
+    useEffect(() => {
+        setFilteredData(data);
+    }, [data]);
 
     // Handle click on change page button
     const handleChangePage = (e, newPage) => {
@@ -152,9 +163,12 @@ const DataTable = ({ title, columns, translation, onSelectChanged = () => { }, d
             <EnhancedTableToolbar
                 title={title}
                 translation={translation}
+                items={data}
+                updateItems={setFilteredData}
                 selectedItems={selected}
                 numSelected={selected.length}
-                actions={actions} />
+                actions={actions}
+                search={search} />
             {/** Table */}
             <Table aria-label="data table" stickyHeader>
                 {/** Table Head */}
@@ -164,12 +178,12 @@ const DataTable = ({ title, columns, translation, onSelectChanged = () => { }, d
                     orderBy={orderBy}
                     onSelectAllClick={handleSelectAllClick}
                     onRequestSort={handleRequestSort}
-                    rowCount={data.length}
+                    rowCount={filteredData.length}
                     headCells={columns}
                 />
                 {/** Table body */}
                 <TableBody>
-                    {stableSort(data, getSorting(order, orderBy))
+                    {stableSort(filteredData, getSorting(order, orderBy))
                         .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                         .map((row, index) => {
                             const rowSelected = isSelected(row.id); // Get selected state
@@ -188,21 +202,25 @@ const DataTable = ({ title, columns, translation, onSelectChanged = () => { }, d
                                                     column.component(row) // Render component passing row item
                                                     :
                                                     // classic data display
-                                                    column.format ? column.format(value) : value
+                                                    column.format ? column.format(value) : value ? value : ''
                                                 }
                                             </TableCell>
                                         );
                                     })}
                                 </TableRow>
-                            )
+                            );
                         })}
                 </TableBody>
             </Table >
+            {loading &&
+                <Grid container justify="center" className={classes.loading}>
+                    <Loading />
+                </Grid>}
             {/** Pagination */}
             <TablePagination
                 rowsPerPageOptions={[10, 25, 100]}
                 component="div"
-                count={data.length}
+                count={filteredData.length}
                 rowsPerPage={rowsPerPage}
                 page={page}
                 onChangePage={handleChangePage}
@@ -215,7 +233,7 @@ const DataTable = ({ title, columns, translation, onSelectChanged = () => { }, d
 
 DataTable.propTypes = {
     data: PropTypes.arrayOf(PropTypes.shape({
-        id: PropTypes.string.isRequired, // Unique id of item. Used to filter selection
+        id: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired, // Unique id of item. Used to filter selection
     })).isRequired, // Array of data with fields matching the id of columns
     columns: PropTypes.arrayOf(PropTypes.shape({
         id: PropTypes.string, // Unique identifier of the column (it s already the field of the data object too)
@@ -232,6 +250,8 @@ DataTable.propTypes = {
     actions: PropTypes.arrayOf(PropTypes.shape({
         component: PropTypes.func, // Component to display
     })), // Action are items displayed in the toolbar to trigger actions in the table.
+    search: PropTypes.bool, // If true, display the search bar in the toolbar
+    loading: PropTypes.bool, // State to toggle if table data are not ready yet (from API)
 };
 // // //
 // Redux connexion
@@ -244,8 +264,29 @@ export default connect(mapStateToProps)(DataTable);
 // Enhanced Table Toolbar
 // Toolbar to display number of selected items in the list
 // cf https://material-ui.com/components/tables/ (Sorting and selecting)
-const EnhancedTableToolbar = ({ title, translation, selectedItems = [], numSelected = 0, actions = [] }) => {
+const EnhancedTableToolbar = ({ title, translation, updateItems, search = true, items = [], selectedItems = [], numSelected = 0, actions = [] }) => {
     const classes = useToolbarStyles();
+
+    // Handle Typing in search
+    const handleSearchInTable = (e, value) => {
+        if (value !== null) {
+            const filteredData = items.filter(item => {
+                let contains = false;
+                Object.keys(item).forEach(key => {
+                    const itemVal = item[key].toString();
+                    if (itemVal.toLowerCase().includes(value.toLowerCase()) && key !== "id") {
+                        // check each key of item (if equals)
+                        contains = true;
+                        return;
+                    }
+                });
+                return contains;
+            });
+            updateItems(filteredData); // Update items
+        } else {
+            updateItems(items); // Reset items if search is empty
+        }
+    };
 
     return (
         <Toolbar
@@ -264,20 +305,26 @@ const EnhancedTableToolbar = ({ title, translation, selectedItems = [], numSelec
                 </Grid>
                 {/** Actions */}
                 <Grid item>
-                    {actions.map((action, index) =>
-                        (
-                            <div key={index}>{action.component(selectedItems)}</div>
-                        ))}
+                    <Grid container alignItems="center" justify="space-around">
+                        {actions.map((action, index) =>
+                            (
+                                <div key={index}>{action.component(selectedItems)}</div>
+                            ))}
+                        {search && <Searchbar onChange={handleSearchInTable} />}
+                    </Grid>
                 </Grid>
             </Grid>
-
         </Toolbar >
     );
 };
 
 EnhancedTableToolbar.propTypes = {
     title: PropTypes.string.isRequired,
+    search: PropTypes.bool, // if true, display the searchbar
     translation: PropTypes.object.isRequired,
+    selectedItems: PropTypes.array,
+    updateItems: PropTypes.func, // Function to update the items to display (for filter purpose)
+    items: PropTypes.array,
     numSelected: PropTypes.number.isRequired,
     actions: PropTypes.arrayOf(PropTypes.shape({
         component: PropTypes.func, // Component to display
@@ -296,7 +343,7 @@ function EnhancedTableHead({ onSelectAllClick, order, orderBy, numSelected, rowC
 
     return (
         <TableHead>
-            <TableRow>
+            <TableRow >
                 {/** Checkbox to select all */}
                 <TableCell padding="checkbox" className={classes.head}>
                     <Checkbox

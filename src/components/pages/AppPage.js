@@ -14,6 +14,14 @@ const AppPage = () => {
         enqueueSnackbar(errorNotification);
     }, [enqueueSnackbar, notificationFactory]);
 
+    const data = () => {
+        const d = []
+        for(let i = 0; i< 10000; i++){
+            d.push({ fieldtest: `value ${i}`, id: i, field1: 'ok', field2: 'test', field3: 25, field4: '8pppp' });
+        }
+        return d
+    }
+
     return (
         <div>
             <DataTable
@@ -22,8 +30,7 @@ const AppPage = () => {
                 columns={[
                     {
                         label: "test1",
-                        id: "field1",
-                        format: (val) => `${val} ...`,
+                        id: "fieldtest",
                     },
                     {
                         label: "action1",
@@ -33,13 +40,7 @@ const AppPage = () => {
                         component: (item) => (<Button>testButton</Button>),
                     }
                 ]}
-                data={[
-                    { field1: 'premiere value', id: '1' },
-                    { field1: 'deuxième value', id: '2' },
-                    { field1: 'troisième value', id: '3' },
-                    { field1: 'quatrième value', id: '4' },
-                    { field1: 'cinquième value', id: '5' },
-                ]}
+                data={data()}
                 actions={
                     [
                         {
