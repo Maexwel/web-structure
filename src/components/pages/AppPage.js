@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useSnackbar } from 'notistack';
 import { useEffect } from 'react';
 import { ServiceLocatorContext } from '../context';
-import { DataTable } from '../ui-kit';
+import { DataTable, TextField, ComboBox } from '../ui-kit';
 import { Grid } from '@material-ui/core';
 import ActionButton from '../ui-kit/buttons/ActionButton/ActionButton';
 
@@ -17,7 +17,6 @@ const AppPage = () => {
 
     const data = () => {
         const d = []
-        console.log('init')
         for (let i = 0; i < 10000; i++) {
             d.push({ fieldtest: `value ${i}`, id: i, field1: 'ok', field2: 'test', field3: 25, field4: '8pppp' });
         }
@@ -51,6 +50,10 @@ const AppPage = () => {
                     ]
                 }
             />
+            <br />
+            <TextField name="test" placeholder="test" label="test" />
+            <br />
+            <ComboBox label="test" options={[{ label: 'test', value: 1 }]} />
         </div>
     )
 }

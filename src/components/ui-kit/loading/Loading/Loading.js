@@ -11,5 +11,5 @@ const Loading = ({ variant = 'primary' }) => {
 };
 Loading.propTypes = {
     variant: PropTypes.oneOf(["primary", "secondary"]), // Variant theme color
-}
+};
 export default Loading;
