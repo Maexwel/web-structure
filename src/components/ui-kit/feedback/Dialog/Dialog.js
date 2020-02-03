@@ -1,20 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Dialog as MaterialDialog, DialogContent, DialogActions, DialogTitle } from '@material-ui/core';
+import { makeStyles, createStyles } from '@material-ui/core/styles';
 
+// Style def
+const useStyles = makeStyles((theme) =>
+    createStyles({
+        head: {
+            background: theme.palette.primary.main,
+            color: theme.palette.common.white,
+        }
+    })
+);
 // Custom Dialog component
 // The dialog should contain a header, a body (that is a component) and a footer with actions possibility
 // Override of Material Dialog
 const Dialog = ({ isOpen, toggle, title, children, actions = [] }) => {
+    const classes = useStyles();
 
     return (
         <MaterialDialog
+            scroll="paper"
             open={isOpen}
-            onClose={toggle}>
+            onClose={toggle}
+        >
             {/** HEAD */}
-            <DialogTitle>{title}</DialogTitle>
+            <DialogTitle className={classes.head}>
+                {title}
+            </DialogTitle>
             {/** BODY */}
-            <DialogContent>
+            <DialogContent dividers>
                 {children}
             </DialogContent>
             {/** FOOTER */}

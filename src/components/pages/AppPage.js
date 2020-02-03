@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useSnackbar } from 'notistack';
 import { useEffect } from 'react';
 import { ServiceLocatorContext } from '../context';
-import { DataTable, TextField, ComboBox } from '../ui-kit';
+import { DataTable, TextField, ComboBox, Dialog } from '../ui-kit';
 import { Grid } from '@material-ui/core';
 import ActionButton from '../ui-kit/buttons/ActionButton/ActionButton';
 
@@ -50,10 +50,6 @@ const AppPage = () => {
                     ]
                 }
             />
-            <br />
-            <TextField name="test" placeholder="test" label="test" />
-            <br />
-            <ComboBox label="test" options={[{ label: 'test', value: 1 }]} />
         </div>
     )
 }
