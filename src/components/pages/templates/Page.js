@@ -7,6 +7,7 @@ import { connect } from 'react-redux';
 import { updateViewAction } from '../../../store/actions/viewActions';
 import { withRouter } from 'react-router-dom';
 import { LangPicker } from '../../LangPicker';
+import { Auth } from '../../Auth';
 
 const drawerWidth = 220;
 
@@ -102,82 +103,84 @@ const Page = (props) => {
     };
 
     return (
-        <div className={classes.root}>
-            <CssBaseline />
-            <AppBar
-                position="fixed"
-                className={clsx(classes.appBar, {
-                    [classes.appBarShift]: open,
-                })}
-                color="primary"
-            >
-                <Toolbar>
-                    <Grid
-                        justify="space-between"
-                        alignItems="center"
-                        container
-                    >
-                        <Grid item>
-                            <IconButton
-                                color="inherit"
-                                aria-label="open drawer"
-                                onClick={handleDrawerOpen}
-                                edge="start"
-                                className={clsx(classes.menuButton, {
-                                    [classes.hide]: open,
-                                })}
-                            >
-                                <Icon>menu</Icon>
-                            </IconButton>
+        <Auth isAuth={true} loginPath="/login">
+            <div className={classes.root}>
+                <CssBaseline />
+                <AppBar
+                    position="fixed"
+                    className={clsx(classes.appBar, {
+                        [classes.appBarShift]: open,
+                    })}
+                    color="primary"
+                >
+                    <Toolbar>
+                        <Grid
+                            justify="space-between"
+                            alignItems="center"
+                            container
+                        >
+                            <Grid item>
+                                <IconButton
+                                    color="inherit"
+                                    aria-label="open drawer"
+                                    onClick={handleDrawerOpen}
+                                    edge="start"
+                                    className={clsx(classes.menuButton, {
+                                        [classes.hide]: open,
+                                    })}
+                                >
+                                    <Icon>menu</Icon>
+                                </IconButton>
+                            </Grid>
+                            <Grid item>
+                            </Grid>
+                            <Grid item>
+                                <LangPicker />
+                            </Grid>
                         </Grid>
-                        <Grid item>
-                        </Grid>
-                        <Grid item>
-                            <LangPicker />
-                        </Grid>
-                    </Grid>
-                </Toolbar>
-            </AppBar>
-            <Drawer
-                variant="permanent"
-                className={clsx(classes.drawer, {
-                    [classes.drawerOpen]: open,
-                    [classes.drawerClose]: !open,
-                })}
-                classes={{
-                    paper: clsx({
+                    </Toolbar>
+                </AppBar>
+                <Drawer
+                    variant="permanent"
+                    className={clsx(classes.drawer, {
                         [classes.drawerOpen]: open,
                         [classes.drawerClose]: !open,
-                    }),
-                }}
-                open={open}
-            >
-                <div className={classes.toolbar}>
-                    <Typography component="h5">
-                        App brand
+                    })}
+                    classes={{
+                        paper: clsx({
+                            [classes.drawerOpen]: open,
+                            [classes.drawerClose]: !open,
+                        }),
+                    }}
+                    open={open}
+                >
+                    <div className={classes.toolbar}>
+                        <Typography component="h5">
+                            App brand
                             </Typography>
-                    <IconButton onClick={handleDrawerClose}>
-                        {theme.direction === 'rtl' ? <Icon>chevron_right</Icon> : <Icon>chevron_left</Icon>}
-                    </IconButton>
+                        <IconButton onClick={handleDrawerClose}>
+                            {theme.direction === 'rtl' ? <Icon>chevron_right</Icon> : <Icon>chevron_left</Icon>}
+                        </IconButton>
+                    </div>
+                    <Divider />
+                    <List>
+                        {currentPage ?
+                            links.map((link, index) => (
+                                <DrawerLink
+                                    key={index}
+                                    {...link}
+                                    displayText={translation[link.name]}
+                                    isCurrent={currentPage.name === link.name}
+                                    history={history} />
+                            )) : null}
+                    </List>
+                </Drawer>
+                <div className={classes.content}>
+                    {/** Component injection */}
+                    <Component {...props} />
                 </div>
-                <Divider />
-                <List>
-                    {currentPage ?
-                        links.map((link, index) => (
-                            <DrawerLink
-                                key={index}
-                                {...link}
-                                displayText={translation[link.name]}
-                                isCurrent={currentPage.name === link.name}
-                                history={history} />
-                        )) : null}
-                </List>
-            </Drawer>
-            <div className={classes.content}>
-                {/** Component injection */}
-                <Component {...props} />
             </div>
-        </div>
+        </Auth>
     )
 }
 // // // 
