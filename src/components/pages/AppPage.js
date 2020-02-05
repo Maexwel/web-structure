@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useSnackbar } from 'notistack';
 import { useEffect } from 'react';
 import { ServiceLocatorContext } from '../context';
-import { DataTable } from '../ui-kit';
+import { DataTable, BackdropLoading } from '../ui-kit';
 import { Grid } from '@material-ui/core';
 import ActionButton from '../ui-kit/buttons/ActionButton/ActionButton';
 

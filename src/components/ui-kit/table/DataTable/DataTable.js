@@ -5,7 +5,7 @@ import { makeStyles, createStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import { connect } from 'react-redux';
 import { Searchbar } from '../../form';
-import { Loading } from '../../loading';
+import { Loading } from '../../feedback';
 
 // Style def
 // Base style
