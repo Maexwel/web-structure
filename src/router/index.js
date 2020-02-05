@@ -1,15 +1,18 @@
 import React from 'react';
-import { AppPage } from '../components/pages';
 import { routes as ROUTES } from './routes';
-import { BrowserRouter, Switch } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import Page from '../components/pages/templates/Page';
-import TopbarPage from '../components/pages/templates/TopbarPage';
+import { NotFoundPage } from '../components/pages'
 
 const routes = () => (
     <BrowserRouter>
         <Switch>
-            <Page exact {...ROUTES.APP_ROUTE} component={AppPage} />
-            <TopbarPage exact {...ROUTES.APP_ROUTE} component={AppPage} />
+            {/** Map each route defined in the routes.js file */}
+            {Object.keys(ROUTES).map((key) => (
+                <Page key={key} {...ROUTES[key]} />
+            ))}
+            {/** Handle page not found */}
+            <Route component={NotFoundPage} />
         </Switch>
     </BrowserRouter>
 )

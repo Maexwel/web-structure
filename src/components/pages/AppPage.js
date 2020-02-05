@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { useSnackbar } from 'notistack';
 import { useEffect } from 'react';
 import { ServiceLocatorContext } from '../context';
-import { DataTable, BackdropLoading } from '../ui-kit';
+import { DataTable } from '../ui-kit';
 import { Grid } from '@material-ui/core';
 import ActionButton from '../ui-kit/buttons/ActionButton/ActionButton';
 
@@ -32,6 +32,14 @@ const AppPage = () => {
                     {
                         label: "test1",
                         id: "fieldtest",
+                    },
+                    {
+                        label: "test2",
+                        id: "field1",
+                    },
+                    {
+                        label: "test4",
+                        id: "field4",
                     },
                     {
                         label: "actions",

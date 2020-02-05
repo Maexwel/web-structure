@@ -1,8 +1,11 @@
+import { AppPage } from '../components/pages';
+
 export const routes = {
     APP_ROUTE: {
-        icon: 'account_circle',
+        icon: 'account_circle', // Material icon name
         path: '/',
-        name: 'APP',
-        displayText: "App main route"
+        name: 'APP_PAGE', // It should match a key in the lang file
+        exact: true,
+        component: AppPage,
     },
 }

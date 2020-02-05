@@ -7,6 +7,10 @@
         "fr": "Anglais",
         "en": "English"
     },
+    "APP_PAGE": {
+        "fr": "Page principale",
+        "en": "Base page"
+    },
     "DATATABLE_ROWS_PER_PAGE": {
         "fr": "Lignes par page",
         "en": "Rows per page"

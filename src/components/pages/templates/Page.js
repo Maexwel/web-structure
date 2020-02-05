@@ -79,7 +79,7 @@ const useStyles = makeStyles((theme) =>
 );
 // Base Page template of the application
 const Page = (props) => {
-    const { component: Component, path, name, displayText, viewToState, currentPage, history } = props; // Component to inject
+    const { component: Component, path, name, displayText, viewToState, currentPage, history, translation } = props; // Component to inject
 
     useEffect(() => {
         viewToState({ currentPage: { path, name, displayText } }); // set the current page (route = { path: '/', name: '/' })
@@ -167,6 +167,7 @@ const Page = (props) => {
                             <DrawerLink
                                 key={index}
                                 {...link}
+                                displayText={translation[link.name]}
                                 isCurrent={currentPage.name === link.name}
                                 history={history} />
                         )) : null}
@@ -182,7 +183,8 @@ const Page = (props) => {
 // // // 
 // Redux connexion
 const mapStateToProps = state => ({
-    currentPage: state.view.currentPage // Current location in the app
+    currentPage: state.view.currentPage, // Current location in the app
+    translation: state.lang.translation, // Content translated
 })
 
 const mapDispatchToProps = dispatch => {
