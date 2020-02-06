@@ -9,9 +9,8 @@ import ActionButton from '../ui-kit/buttons/ActionButton/ActionButton';
 const AppPage = () => {
     const { enqueueSnackbar } = useSnackbar();
     const { notificationFactory } = useContext(ServiceLocatorContext); // Notification factory
-
     useEffect(() => {
-        const errorNotification = notificationFactory.buildNotification({ title: 'Welcome message', content: 'Welcome in the web-structure template app ! Enjoy !', variant: 'success' });
+        const errorNotification = notificationFactory.buildNotification({ title: 'Welcome message', content: 'Welcome in the web-structure template app ! Enjoy !', variant: "success" });
         enqueueSnackbar(errorNotification, { persist: true });
     }, [enqueueSnackbar, notificationFactory]);
 

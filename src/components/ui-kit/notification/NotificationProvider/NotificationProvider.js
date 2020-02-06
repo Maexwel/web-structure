@@ -25,16 +25,16 @@ const useStyles = makeStyles((theme) =>
             color: 'white'
         },
         error: {
-            backgroundColor: COLORS.error,
+            backgroundColor: theme.palette.error.main,
         },
         success: {
             backgroundColor: COLORS.success,
         },
         info: {
-            backgroundColor: COLORS.info,
+            backgroundColor: theme.palette.primary.main,
         },
         default: {
-            backgroundColor: COLORS.default,
+            backgroundColor: theme.palette.grey[900],
         },
         actionRoot: {
             padding: theme.spacing(1),
@@ -59,7 +59,8 @@ const useStyles = makeStyles((theme) =>
         collapse: {
             padding: theme.spacing(1),
             display: 'flex',
-            flexWrap: 'wrap'
+            flexWrap: 'wrap',
+            color: theme.palette.common.white,
         },
     })
 );
@@ -129,7 +130,12 @@ const SnackMessage = ({ title, content, variant = 'default', id }) => {
                 </div>
             </CardActions>
             <Collapse in={expanded} timeout="auto" mountOnEnter unmountOnExit>
-                <Paper className={classes.collapse}>
+                <Paper className={clsx(classes.collapse, {
+                    [classes.success]: variant === 'success',
+                    [classes.error]: variant === 'error',
+                    [classes.default]: variant === 'default',
+                    [classes.info]: variant === 'info',
+                })}>
                     <Typography gutterBottom>{content}</Typography>
                 </Paper>
             </Collapse>
