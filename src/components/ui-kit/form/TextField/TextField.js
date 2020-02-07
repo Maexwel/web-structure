@@ -4,7 +4,8 @@ import { TextField as MaterialTextField } from '@material-ui/core';
 
 // Custom TextField component
 // Override of Material Input Textfield
-const TextField = ({ label, placeholder, onChange, name, disabled = false, value = '' }) => {
+const TextField = (props) => {
+    const { onChange, inputRef } = props;
 
     // Handle user typing in textfield
     const handleChange = (e) => {
@@ -18,21 +19,25 @@ const TextField = ({ label, placeholder, onChange, name, disabled = false, value
     return (
         <MaterialTextField
             variant="outlined"
-            disabled={disabled}
-            label={label}
-            value={value}
-            name={name}
-            placeholder={placeholder}
             onChange={handleChange}
+            ref={inputRef}
+            {...props}
         />
     );
 };
 TextField.propTypes = {
-    name: PropTypes.string.isRequired,
+    name: PropTypes.string,
     label: PropTypes.string,
     placeholder: PropTypes.string,
     onChange: PropTypes.func.isRequired,
     disabled: PropTypes.bool,
     value: PropTypes.string,
+    InputProps: PropTypes.object,
+    inputRef: PropTypes.object, // To pass ref
+};
+TextField.defaultProps = {
+    value: '',
+    disabled: false,
+    InputProps: null,
 };
 export default TextField;
