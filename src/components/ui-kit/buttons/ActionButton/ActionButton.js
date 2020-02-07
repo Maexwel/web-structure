@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Tooltip, Icon, Fab,IconButton as MaterialIconButton } from '@material-ui/core';
+import { Button, Tooltip, Icon, Fab, IconButton as MaterialIconButton } from '@material-ui/core';
 import PropTypes from 'prop-types';
 
 // Base button with theme color as background
@@ -23,7 +23,8 @@ const ActionButton = (props) => {
 
     return (
         <Tooltip
-            title={tip}>
+            title={tip}
+            placement="bottom">
             <div>
                 {buttonFactory()}
             </div>
