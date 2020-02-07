@@ -1,0 +1,1 @@
+export { successColor, theme } from './theme';

@@ -5,13 +5,7 @@ import PropTypes from 'prop-types';
 import { IconButton, Icon, Card, CardActions, Collapse, Paper, Typography } from '@material-ui/core';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
-
-const COLORS = {
-    default: '#222222',
-    success: '#4CAF50',
-    error: '#C62828',
-    info: '#1E88E5',
-}; // Colors of notifications
+import { successColor } from '../../../../theme';
 
 // Style
 const useStyles = makeStyles((theme) =>
@@ -31,7 +25,7 @@ const useStyles = makeStyles((theme) =>
             backgroundColor: theme.palette.error.main,
         },
         success: {
-            backgroundColor: COLORS.success,
+            backgroundColor: successColor,
         },
         info: {
             backgroundColor: theme.palette.primary.main,
