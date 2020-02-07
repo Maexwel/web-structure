@@ -1,14 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import {  ClickAwayListener, Paper, List, MenuItem, Popper, InputAdornment } from '@material-ui/core';
+import { ClickAwayListener, Paper, List, MenuItem, Popper, InputAdornment } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
-import { Loading,TextField } from '../../';
+import { Loading, TextField } from '../../';
 
 // Style def
 const useStyles = makeStyles(theme => createStyles({
     suggestions: {
         zIndex: theme.zIndex.drawer + 1,
-    }
+    },
+    list: {
+        maxHeight: 250,
+        overflow: 'scroll',
+    },
 }));
 // Custom AutoComplete component
 // This component is used to display loading animation while results are fetching
@@ -90,7 +94,7 @@ const AutoComplete = ({ label, placeholder, onChange, onSelect, loading = false,
                     <ClickAwayListener onClickAway={closeSuggestions}>
                         <Paper
                             style={{ width: inputWidth }}>
-                            <List >
+                            <List className={classes.list} >
                                 {suggestions.map((suggestion, key) => (
                                     <MenuItem key={key} onClick={(e) => handleSelectSuggestion(suggestion)}>{suggestion.label}</MenuItem>
                                 ))}
