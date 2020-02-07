@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Select from 'react-select';
 import { useTheme, createStyles, makeStyles } from '@material-ui/core/styles';
-import { InputLabel, MenuItem, Checkbox, Radio } from '@material-ui/core';
+import { InputLabel, MenuItem, Checkbox } from '@material-ui/core';
 
 // Style
 // Style
@@ -110,7 +110,7 @@ const Option = ({ isSelected, innerProps, label, isMulti }) => {
     return (
         <div {...innerProps}>
             <MenuItem selected={isSelected}>
-                {isMulti ? <Checkbox checked={isSelected} /> : <Radio checked={isSelected} />}
+                {isMulti && <Checkbox checked={isSelected} />}
                 <InputLabel>{label}</InputLabel>
             </MenuItem>
         </div >

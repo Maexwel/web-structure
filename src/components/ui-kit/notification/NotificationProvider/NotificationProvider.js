@@ -24,6 +24,9 @@ const useStyles = makeStyles((theme) =>
             fontWeight: 'bold',
             color: 'white'
         },
+        text: {
+            fontSize: 13,
+        },
         error: {
             backgroundColor: theme.palette.error.main,
         },
@@ -136,7 +139,7 @@ const SnackMessage = ({ title, content, variant = 'default', id }) => {
                     [classes.default]: variant === 'default',
                     [classes.info]: variant === 'info',
                 })}>
-                    <Typography gutterBottom>{content}</Typography>
+                    <Typography gutterBottom className={classes.text}>{content}</Typography>
                 </Paper>
             </Collapse>
         </Card >

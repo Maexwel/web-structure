@@ -178,6 +178,7 @@ const DataTable = ({ title, columns, translation, loading = false, search = true
             <Table aria-label="data table" stickyHeader>
                 {/** Table Head */}
                 <EnhancedTableHead
+                    checkable={checkable}
                     numSelected={selected.length}
                     order={order}
                     orderBy={orderBy}
@@ -195,9 +196,10 @@ const DataTable = ({ title, columns, translation, loading = false, search = true
                             return (
                                 <TableRow selected={rowSelected} className={classes.row} onClick={(e) => handleSelectOneClick(row)} hover tabIndex={-1} key={index}>
                                     {/** Checkbox of the row to select the item */}
-                                    <TableCell padding="checkbox">
-                                        <Checkbox checked={rowSelected} />
-                                    </TableCell>
+                                    {checkable &&
+                                        <TableCell padding="checkbox">
+                                            <Checkbox checked={rowSelected} />
+                                        </TableCell>}
                                     {columns.map((column, index) => {
                                         const value = column.isAction ? row : row[column.id]; // Value for the column (value is the complete row if this is an action)
                                         return (
@@ -341,7 +343,7 @@ EnhancedTableToolbar.propTypes = {
 // // //
 // Enhanced Table head
 // cf https://material-ui.com/components/tables/ (Sorting and selecting)
-function EnhancedTableHead({ onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, headCells = [] }) {
+function EnhancedTableHead({ onSelectAllClick, order, orderBy, numSelected, rowCount, onRequestSort, checkable = true, headCells = [] }) {
     const classes = useStyles();
     // Sort handler used to sort the table
     const createSortHandler = property => event => {
@@ -352,14 +354,15 @@ function EnhancedTableHead({ onSelectAllClick, order, orderBy, numSelected, rowC
         <TableHead>
             <TableRow >
                 {/** Checkbox to select all */}
-                <TableCell padding="checkbox" className={classes.head}>
-                    <Checkbox
-                        indeterminate={numSelected > 0 && numSelected < rowCount}
-                        checked={rowCount > 0 && numSelected === rowCount}
-                        onChange={onSelectAllClick}
-                        inputProps={{ 'aria-label': 'select all' }}
-                    />
-                </TableCell>
+                {checkable &&
+                    <TableCell padding="checkbox" className={classes.head}>
+                        <Checkbox
+                            indeterminate={numSelected > 0 && numSelected < rowCount}
+                            checked={rowCount > 0 && numSelected === rowCount}
+                            onChange={onSelectAllClick}
+                            inputProps={{ 'aria-label': 'select all' }}
+                        />
+                    </TableCell>}
                 {/** Columns */}
                 {headCells.map(headCell => (
                     <TableCell
