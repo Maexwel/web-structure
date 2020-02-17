@@ -45,7 +45,7 @@ const AppPage = () => {
                         id: "actions",
                         align: "center",
                         isAction: true,
-                        component: (item) => (<Grid container justify="center" alignItems="center"><Grid item><ActionButton color="primary" label="view" onClick={(e) => console.log(item)} /></Grid><Grid item><ActionButton type="icon" tip="edit item" icon="edit" label="view" onClick={() => console.log(`edit item ${item.id}`)} /></Grid></Grid>),
+                        component: (item) => (<Grid container justify="center" alignItems="center"><Grid item><ActionButton color="primary" label="view" onClick={(e) => console.log(item)} /></Grid><Grid item><ActionButton buttonType="icon" tip="edit item" icon="edit" label="view" onClick={() => console.log(`edit item ${item.id}`)} /></Grid></Grid>),
                     },
                 ]}
                 data={data()}

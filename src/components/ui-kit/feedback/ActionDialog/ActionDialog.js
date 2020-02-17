@@ -42,7 +42,7 @@ const ActionDialog = ({ isOpen, toggle, title, children, onCancel, onSubmit, act
         </Dialog>
     );
 };
-Dialog.propTypes = {
+ActionDialog.propTypes = {
     children: PropTypes.node.isRequired, // Children is the body of the Dialog.
     toggle: PropTypes.func.isRequired,
     isOpen: PropTypes.bool.isRequired,

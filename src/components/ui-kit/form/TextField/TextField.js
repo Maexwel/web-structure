@@ -18,10 +18,9 @@ const TextField = (props) => {
 
     return (
         <MaterialTextField
-            variant="outlined"
+            {...props}
             onChange={handleChange}
             ref={inputRef}
-            {...props}
         />
     );
 };
@@ -34,10 +33,13 @@ TextField.propTypes = {
     value: PropTypes.string,
     InputProps: PropTypes.object,
     inputRef: PropTypes.object, // To pass ref
+    fullWidth: PropTypes.bool,
+    className: PropTypes.string,
 };
 TextField.defaultProps = {
     value: '',
     disabled: false,
     InputProps: null,
+    variant: 'outlined',
 };
 export default TextField;

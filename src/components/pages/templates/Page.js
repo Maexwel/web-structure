@@ -1,12 +1,11 @@
 import React, { useEffect } from 'react';
-import { routes as C } from '../../../router/routes';
 import clsx from 'clsx';
 import { createStyles, makeStyles, useTheme } from '@material-ui/core/styles';
 import { Drawer, Grid, AppBar, Toolbar, List, ListItemText, ListItemIcon, ListItem, IconButton, Divider, CssBaseline, Typography, Icon } from '@material-ui/core';
 import { connect } from 'react-redux';
 import { updateViewAction } from '../../../store/actions/viewActions';
 import { withRouter } from 'react-router-dom';
-import { LangPicker } from '../../LangPicker';
+import { LangPicker } from '../../lang';
 import { Auth } from '../../Auth';
 
 const drawerWidth = 220;
@@ -81,18 +80,24 @@ const useStyles = makeStyles((theme) =>
 // Base Page template of the application
 const Page = (props) => {
     const { component: Component, path, name, displayText, viewToState, currentPage, history, translation } = props; // Component to inject
+    const classes = useStyles();
+    const theme = useTheme();
+    // State
+    const [open, setOpen] = React.useState(false);
+    // links
+    const links = [
+        {
+            icon: 'account_circle',
+            path: '/',
+            name: 'APP_PAGE',
+        },
+    ];
 
+    // onRedirect
     useEffect(() => {
         viewToState({ currentPage: { path, name, displayText } }); // set the current page (route = { path: '/', name: '/' })
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [path, name])
-
-    const classes = useStyles();
-    const theme = useTheme();
-    const [open, setOpen] = React.useState(false);
-
-    // Main menu's links
-    const links = Object.keys(C).map(key => C[key])
+    }, [path, name]);
 
     const handleDrawerOpen = () => {
         setOpen(true);
