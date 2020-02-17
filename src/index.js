@@ -14,7 +14,7 @@ import { ServiceLocatorProvider, baseServiceLocator } from './components/context
 import { NotificationProvider } from './components/ui-kit'; // Notification provider
 import { MuiPickersUtilsProvider, } from '@material-ui/pickers'; // Picker util provider
 import MomentUtils from '@date-io/moment'; // Moment utility for pickers
-import LangProvider from './components/lang/LangProvider'; // Lang provider (translation)
+import { LangProvider } from './components/lang'; // Lang provider (translation)
 import { LANG_DATA } from './lang'; // Lang constant
 require('dotenv').config();
 

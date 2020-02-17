@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Dialog, DialogContent, DialogActions, DialogTitle } from '@material-ui/core';
 import { makeStyles, createStyles } from '@material-ui/core/styles';
 import { ActionButton } from '../../';
+import { isMobile } from 'react-device-detect';
 
 // Style def
 const useStyles = makeStyles((theme) =>
@@ -17,11 +18,13 @@ const useStyles = makeStyles((theme) =>
 // The dialog should contain a header, a body (that is a component) and a footer with actions
 // This component is usefull for form dialog purpose or to show message
 // Override of Material Dialog
-const ActionDialog = ({ isOpen, toggle, title, children, onCancel, onSubmit, action = true, cancelLabel = "", submitDisabled = false, submitLabel = "" }) => {
+const ActionDialog = ({ isOpen, toggle, title, children, onCancel, onSubmit, fullWidth = true, fullScreen = isMobile, action = true, cancelLabel = "", submitDisabled = false, submitLabel = "" }) => {
     const classes = useStyles();
 
     return (
         <Dialog
+            fullWidth
+            fullScreen={fullScreen}
             scroll="paper"
             open={isOpen}
             onClose={toggle}>
@@ -53,5 +56,7 @@ ActionDialog.propTypes = {
     onSubmit: PropTypes.func,
     submitDisabled: PropTypes.bool,
     action: PropTypes.bool, // Determine if the dialog should display a footer with actions buttons
+    fullScreen: PropTypes.bool,
+    fullWidth: PropTypes.bool,
 };
 export default ActionDialog;
